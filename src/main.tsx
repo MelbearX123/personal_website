@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
+import './index.css' // global theme + neon color variables
 
 // This file is the app's entry point — the equivalent of Angular's main.ts.
 // It finds the <div id="root"> in index.html and renders <App /> into it.

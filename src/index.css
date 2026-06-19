@@ -1,0 +1,64 @@
+/*
+  GLOBAL STYLES + THEME
+  ---------------------
+  This file is imported once in main.tsx, so these styles apply everywhere.
+  (In Angular this is roughly your global styles.css.)
+
+  The :root block holds CSS variables — reusable values for our palette.
+  Use them anywhere with var(--accent-rose), etc. Change a color here and it
+  updates across the whole site. The palette is muted retrowave: warm rose and
+  soft violet over a deep night sky, used sparingly rather than as bright neon.
+*/
+:root {
+  --bg-deep: #0a0613;        /* near-black, faintly purple */
+  --bg-panel: #130d24;       /* slightly lighter panels */
+  --bg-panel-2: #1a1232;
+
+  --accent-rose: #f6a5c0;    /* soft warm pink (the sun) */
+  --accent-violet: #b58ad6;  /* muted lavender */
+  --accent-amber: #ffc9a3;   /* warm peach highlight */
+
+  --text-bright: #f1ecf7;    /* main readable text */
+  --text-dim: #9a90b3;       /* secondary / muted text */
+  --hairline: rgba(181, 138, 214, 0.18); /* subtle borders */
+
+  --font-title: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* A tiny reset so spacing is predictable across browsers. */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* gives a nice glide when jumping between sections */
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-bright);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* A subtle near-black gradient: a faint violet glow up top (behind the hero)
+     fading into a deep, near-black wash for the rest of the page. */
+  background-color: #08040e;
+  background-image:
+    radial-gradient(1000px 480px at 50% 0%, rgba(155, 63, 224, 0.1), transparent 55%),
+    linear-gradient(180deg, #0a0716 0%, #08040e 70%);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

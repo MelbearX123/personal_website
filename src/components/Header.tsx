@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import './Header.css'
 
 // The navigation header, shown on every page.
 //
@@ -20,8 +21,8 @@ export default function Header() {
   ]
 
   return (
-    <header>
-      <nav>
+    <header className="site-header">
+      <nav className="site-nav">
         {links.map((link) => (
           <NavLink
             // `key` must be unique among siblings — React uses it to track
@@ -30,6 +31,9 @@ export default function Header() {
             to={link.to}
             // `end` makes "/" only match the exact home path, not every route.
             end={link.to === '/'}
+            // NavLink hands us an `isActive` flag; we use it to add a CSS class
+            // to whichever link matches the current page.
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
           >
             {link.label}
           </NavLink>

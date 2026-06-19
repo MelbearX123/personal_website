@@ -1,10 +1,16 @@
-// A "page" is just a component that a route renders.
-// Each of these is intentionally bare — a skeleton to fill in later.
+import Hero from '../components/Hero'
+import Experience from '../components/Experience'
+import Projects from '../components/Projects'
+import './Home.css'
+
+// The Home page just stacks the three sections in order. Each section is its
+// own component (see ../components), which keeps this file easy to read.
 export default function Home() {
   return (
-    <section>
-      <h1>Home</h1>
-      <p>Welcome to my personal website.</p>
-    </section>
+    <div className="home">
+      <Hero />
+      <Experience />
+      <Projects />
+    </div>
   )
 }

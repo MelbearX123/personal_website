@@ -1,0 +1,41 @@
+/*
+  The top navigation bar. It's "fixed" so it floats over the full-screen hero
+  and stays put as you scroll. A translucent dark background with a blur keeps
+  the links readable. Kept understated — no heavy glow.
+*/
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* above the hero content */
+  background: rgba(10, 6, 19, 0.6);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.site-nav {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: flex-end; /* push the links to the right edge */
+  padding: 1.25rem 2.5rem;
+}
+
+.nav-link {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-bright);
+}
+
+/* The link for the page you're currently on. */
+.nav-link.active {
+  color: var(--accent-rose);
+}
