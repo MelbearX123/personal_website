@@ -1,64 +1,157 @@
 /*
-  GLOBAL STYLES + THEME
-  ---------------------
-  This file is imported once in main.tsx, so these styles apply everywhere.
-  (In Angular this is roughly your global styles.css.)
+  GLOBAL STYLES + THEME  —  "Y2K / PS2 cover-art" system
+  ------------------------------------------------------
+  Imported once in main.tsx, so these apply everywhere.
 
-  The :root block holds CSS variables — reusable values for our palette.
-  Use them anywhere with var(--accent-rose), etc. Change a color here and it
-  updates across the whole site. The palette is muted retrowave: warm rose and
-  soft violet over a deep night sky, used sparingly rather than as bright neon.
+  The look: cold steel-blues and periwinkle over icy near-whites and deep
+  navy, with chrome/silver gradients, faint scanlines and a pixel-dither
+  texture. Think an early-2000s LCD advert or a PS2 game case: glossy,
+  technical, a little melancholy.
 */
 :root {
-  --bg-deep: #0a0613;        /* near-black, faintly purple */
-  --bg-panel: #130d24;       /* slightly lighter panels */
-  --bg-panel-2: #1a1232;
+  /* --- core palette ------------------------------------------------ */
+  --ice:        #eef4fb;   /* near-white, faint blue */
+  --steel-050:  #dbe6f4;
+  --steel-100:  #c2d2e8;
+  --steel-200:  #a7bcda;
+  --steel-300:  #8aa2c6;   /* periwinkle mid */
+  --steel-400:  #6d86af;
+  --steel-500:  #556b95;   /* the signature steel blue */
+  --steel-600:  #3f5178;
+  --steel-700:  #2b3a5c;
+  --navy-800:   #1a2540;
+  --navy-900:   #101827;   /* deep panel */
+  --ink:        #0a0f1a;   /* near-black background */
 
-  --accent-rose: #f6a5c0;    /* soft warm pink (the sun) */
-  --accent-violet: #b58ad6;  /* muted lavender */
-  --accent-amber: #ffc9a3;   /* warm peach highlight */
+  --cyan:       #86e3ff;   /* electric accent glow */
+  --cyan-dim:   #5bb8dd;
 
-  --text-bright: #f1ecf7;    /* main readable text */
-  --text-dim: #9a90b3;       /* secondary / muted text */
-  --hairline: rgba(181, 138, 214, 0.18); /* subtle borders */
+  /* --- semantic tokens -------------------------------------------- */
+  --bg:         var(--ink);
+  --text:       var(--ice);
+  --text-dim:   #9fb0cb;
+  --text-faint: #6a7c9a;
+  --hairline:   rgba(138, 162, 198, 0.20);
+  --hairline-strong: rgba(174, 196, 228, 0.45);
 
-  --font-title: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  /* Chrome / silver gradient used on bars and text */
+  --chrome: linear-gradient(180deg, #f4f8ff 0%, #c3d3e8 42%, #8298bb 52%, #b9cbe4 62%, #eaf2fc 100%);
+  --steel-panel: linear-gradient(180deg, #26334f 0%, #18223a 100%);
+
+  --font-display: 'Chakra Petch', sans-serif;
+  --font-title:   'Space Grotesk', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+  --font-body:    'Inter', sans-serif;
+
+  --radius: 14px;
+  --maxw: 1180px;
 }
 
-/* A tiny reset so spacing is predictable across browsers. */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
-  scroll-behavior: smooth; /* gives a nice glide when jumping between sections */
+  scroll-behavior: smooth;         /* glide when the nav jumps between sections */
+  scroll-padding-top: 84px;        /* keep sections clear of the fixed header */
 }
 
 body {
-  background-color: var(--bg-deep);
-  color: var(--text-bright);
+  background-color: var(--ink);
+  color: var(--text);
   font-family: var(--font-body);
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  /* A subtle near-black gradient: a faint violet glow up top (behind the hero)
-     fading into a deep, near-black wash for the rest of the page. */
-  background-color: #08040e;
+  /*
+    Layered background: a cool radial glow up top, a steel-blue wash, and a
+    faint pixel-grid dither so flat areas never look dead.
+  */
   background-image:
-    radial-gradient(1000px 480px at 50% 0%, rgba(155, 63, 224, 0.1), transparent 55%),
-    linear-gradient(180deg, #0a0716 0%, #08040e 70%);
+    radial-gradient(1100px 620px at 50% -8%, rgba(134, 227, 255, 0.10), transparent 60%),
+    radial-gradient(900px 700px at 85% 20%, rgba(85, 107, 149, 0.16), transparent 60%),
+    linear-gradient(180deg, #0e1626 0%, #0a0f1a 55%, #080c15 100%);
+  background-attachment: scroll;
 }
 
-h1, h2, h3 {
-  font-family: var(--font-title);
-  font-weight: 600;
-  letter-spacing: -0.01em;
+/* A faint tech grid painted over the whole page via a fixed pseudo-layer. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(138, 162, 198, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 162, 198, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(1200px 900px at 50% 0%, #000 40%, transparent 90%);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Very subtle CRT scanlines over everything. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(6, 10, 18, 0.10) 3px
+  );
+  opacity: 0.6;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
+
+a { color: inherit; text-decoration: none; }
+
+/* The page fades/rises in once the boot Loader hands off. */
+.page { opacity: 0; transform: translateY(14px); }
+.page--in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Reusable helpers -------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* Monospace "system label" used above section titles, e.g. `// 01 — ABOUT` */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cyan-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  background: var(--cyan-dim);
+  opacity: 0.7;
+}
+
+/* Chrome-filled text (silver gradient clipped to glyphs). */
+.chrome-text {
+  background: var(--chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Reduce motion for users who ask for it. */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  html { scroll-behavior: auto; }
 }
