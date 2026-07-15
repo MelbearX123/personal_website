@@ -4,14 +4,42 @@
   left: 0;
   right: 0;
   z-index: 100;
-  transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
   border-bottom: 1px solid transparent;
 }
+/* Ease the dark<->light colour swap on everything in the bar so the change
+   glides instead of snapping. */
+.nav__brandtext, .nav__brandx, .nav__brandmark,
+.nav__link, .nav__num, .nav__status, .nav__dot, .nav__link::after {
+  transition: color 0.5s ease, background 0.5s ease, box-shadow 0.5s ease;
+}
+/* Once scrolled off the landing, the bar becomes dark glass and its contents
+   use the default light styling below. */
 .nav--scrolled {
-  background: linear-gradient(180deg, rgba(14, 22, 38, 0.86), rgba(10, 15, 26, 0.72));
+  background: linear-gradient(180deg, rgba(14, 22, 38, 0.9), rgba(10, 15, 26, 0.78));
   border-bottom: 1px solid var(--hairline);
   backdrop-filter: blur(12px) saturate(1.1);
 }
+
+/* At the top the nav sits over the PALE landing, so its contents go dark. */
+.nav:not(.nav--scrolled) .nav__brandtext { color: #1c2740; }
+.nav:not(.nav--scrolled) .nav__brandx { color: var(--steel-600); }
+.nav:not(.nav--scrolled) .nav__brandmark {
+  background: linear-gradient(180deg, #52678c, #22304d);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.nav:not(.nav--scrolled) .nav__link { color: var(--steel-600); }
+.nav:not(.nav--scrolled) .nav__link:hover { color: #1c2740; background: rgba(43, 58, 92, 0.08); }
+.nav:not(.nav--scrolled) .nav__link.is-active { color: #1c2740; }
+.nav:not(.nav--scrolled) .nav__num { color: var(--steel-400); }
+.nav:not(.nav--scrolled) .nav__link.is-active .nav__num { color: var(--steel-600); }
+.nav:not(.nav--scrolled) .nav__link.is-active::after {
+  background: linear-gradient(90deg, var(--steel-600), transparent);
+  box-shadow: none;
+}
+.nav:not(.nav--scrolled) .nav__status { color: var(--steel-600); }
+.nav:not(.nav--scrolled) .nav__dot { background: var(--steel-500); box-shadow: 0 0 8px rgba(85, 107, 149, 0.6); }
 
 .nav__inner {
   height: 68px;
@@ -58,9 +86,9 @@
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   color: var(--text-dim);
-  transition: color 0.2s ease, background 0.2s ease;
+  transition: color 0.5s ease, background 0.5s ease;
 }
-.nav__num { font-size: 0.62rem; color: var(--text-faint); transition: color 0.2s ease; }
+.nav__num { font-size: 0.62rem; color: var(--text-faint); transition: color 0.5s ease; }
 .nav__link:hover { color: var(--ice); background: rgba(138, 162, 198, 0.08); }
 .nav__link.is-active { color: var(--ice); }
 .nav__link.is-active .nav__num { color: var(--cyan); }

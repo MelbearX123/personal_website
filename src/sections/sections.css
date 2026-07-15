@@ -61,20 +61,50 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  /* The entire landing is a pale blue-white surface (like the bright
+     reference covers), fading to the dark page at the very bottom. */
+  background:
+    linear-gradient(180deg, transparent 72%, var(--ink) 100%),
+    linear-gradient(180deg, var(--pale-top) 0%, var(--pale-mid) 58%, var(--pale-bot) 100%);
 }
 .hero__grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(138, 162, 198, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(138, 162, 198, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(43, 58, 92, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43, 58, 92, 0.10) 1px, transparent 1px);
   background-size: 60px 60px;
   transform: perspective(600px) rotateX(62deg) scale(2.4);
   transform-origin: 50% 100%;
-  mask-image: linear-gradient(180deg, transparent 30%, #000 100%);
-  opacity: 0.5;
+  mask-image: linear-gradient(180deg, transparent 30%, #000 80%, transparent 100%);
+  opacity: 0.6;
   animation: heroGrid 22s linear infinite;
 }
+
+/* --- Hero runs on a LIGHT surface, so its contents go dark ------------- */
+.hero .eyebrow { color: var(--steel-600); }
+.hero .eyebrow::before { background: var(--steel-500); opacity: 0.8; }
+/* Use background-IMAGE (not the shorthand) so the earlier `background-clip:
+   text` from .chrome-text is preserved — otherwise the gradient fills the
+   whole box and the name reads as a solid rectangle. */
+.hero .chrome-text { background-image: var(--chrome-dark); }
+.hero__pixels span { background: rgba(43, 58, 92, 0.16); }
+.hero__pixels span.on {
+  background: linear-gradient(180deg, #45597c, #22304d);
+  box-shadow: 0 0 6px rgba(43, 58, 92, 0.3);
+}
+.hero .btn--primary {
+  color: var(--ice);
+  background: linear-gradient(180deg, #3d4f70 0%, #22304d 100%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 8px 24px rgba(28, 39, 64, 0.28);
+}
+.hero .btn--primary:hover { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3), 0 10px 30px rgba(28, 39, 64, 0.4); }
+.hero .btn--ghost {
+  color: var(--steel-700);
+  border-color: rgba(43, 58, 92, 0.35);
+  background: rgba(43, 58, 92, 0.05);
+}
+.hero .btn--ghost:hover { background: rgba(43, 58, 92, 0.1); }
 @keyframes heroGrid { from { background-position-y: 0; } to { background-position-y: 60px; } }
 
 .hero__inner { position: relative; z-index: 2; padding-top: 90px; }
@@ -82,29 +112,29 @@
 
 .hero__name {
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 0.86;
-  letter-spacing: 0.01em;
-  margin-bottom: 30px;
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: 0.015em;
+  margin-bottom: 28px;
 }
 .hero__line {
   display: block;
-  font-size: clamp(3.4rem, 15vw, 11rem);
+  font-size: clamp(2.6rem, 8vw, 5.6rem);
 }
 .hero__line--2 {
   position: relative;
   display: inline-flex;
   align-items: flex-start;
-  gap: 22px;
-  color: var(--ice);
-  text-shadow: 0 0 40px rgba(134, 227, 255, 0.25);
+  gap: 18px;
+  color: #1c2740;
+  text-shadow: 0 1px 20px rgba(255, 255, 255, 0.35);
 }
-.hero__pixels { margin-top: 1.2rem; }
+.hero__pixels { margin-top: 0.7rem; transform: scale(0.85); transform-origin: left top; }
 
 .hero__tag {
   max-width: 46ch;
   font-size: 1.08rem;
-  color: var(--text-dim);
+  color: var(--steel-700);
   margin-bottom: 34px;
 }
 .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -124,7 +154,8 @@
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.34em;
-  color: var(--text-faint);
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(134, 227, 255, 0.4);
 }
 .hero__scrollline {
   width: 1px;

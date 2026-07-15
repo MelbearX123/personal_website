@@ -34,9 +34,17 @@
   --hairline:   rgba(138, 162, 198, 0.20);
   --hairline-strong: rgba(174, 196, 228, 0.45);
 
-  /* Chrome / silver gradient used on bars and text */
+  /* Chrome / silver gradient used on bars and text (for dark backgrounds) */
   --chrome: linear-gradient(180deg, #f4f8ff 0%, #c3d3e8 42%, #8298bb 52%, #b9cbe4 62%, #eaf2fc 100%);
+  /* Dark metallic steel gradient — the same idea inverted, for LIGHT
+     backgrounds (the pale landing). Reads like brushed navy chrome. */
+  --chrome-dark: linear-gradient(180deg, #52678c 0%, #263654 44%, #4a5c80 54%, #1c2740 100%);
   --steel-panel: linear-gradient(180deg, #26334f 0%, #18223a 100%);
+
+  /* Pale landing surface (the bright reference-cover blue-white) */
+  --pale-top: #eaf1fa;
+  --pale-mid: #d3e0ef;
+  --pale-bot: #bccfe2;
 
   --font-display: 'Chakra Petch', sans-serif;
   --font-title:   'Space Grotesk', sans-serif;

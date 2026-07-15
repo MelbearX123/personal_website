@@ -21,7 +21,14 @@ export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    // Flip to the dark-glass style only once we've scrolled most of the way
+    // through the landing (where its pale background is fading to the dark
+    // page), not at the very first pixel of scroll.
+    const onScroll = () => {
+      const hero = document.getElementById('top')
+      const threshold = (hero ? hero.offsetHeight : window.innerHeight) * 0.72
+      setScrolled(window.scrollY > threshold)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
