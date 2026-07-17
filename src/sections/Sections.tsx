@@ -141,10 +141,20 @@ export function Work() {
 /* -------------------------------------------------------- SELECTED WORK */
 export function SelectedWork() {
   const projects = [
-    { n: '01', title: 'Aquos', tag: 'Design System', desc: 'A cold-metal component library and documentation site.', span: 'wide' },
-    { n: '02', title: 'Follow Your Dreams', tag: 'Brand · Web', desc: 'Campaign microsite with dithered imagery and motion.', span: '' },
-    { n: '03', title: 'Lead Me To You', tag: 'Interactive', desc: 'An experimental scrolling narrative experience.', span: '' },
-    { n: '04', title: 'Terminal 22', tag: 'Product', desc: 'Internal dashboard reimagined as a flight-info board.', span: 'wide' },
+    {
+      n: '01',
+      title: 'ChromaForge',
+      tag: 'Computer Vision · Python',
+      desc: 'A PyTorch/CUDA tool that isolates and separates the colour layers of an image to generate custom background assets for games.',
+      href: 'https://github.com/MelbearX123/cv_monorepo',
+    },
+    {
+      n: '02',
+      title: 'handcursorx',
+      tag: 'Computer Vision · Python',
+      desc: 'Hands-free cursor control from a webcam — MediaPipe hand tracking maps fingertip motion and pinch gestures to mouse movement, clicks and scrolling.',
+      href: 'https://github.com/MelbearX123/handcursorx',
+    },
   ]
   return (
     <section id="projects" className="section selected">
@@ -153,7 +163,7 @@ export function SelectedWork() {
         <h2 className="section__title">Selected work</h2>
         <div className="cards">
           {projects.map((p) => (
-            <article className={`card ${p.span === 'wide' ? 'card--wide' : ''}`} key={p.n}>
+            <a className="card" key={p.n} href={p.href} target="_blank" rel="noreferrer">
               <div className="card__thumb" aria-hidden="true">
                 <span className="card__scan" />
                 <PixelCluster className="card__pixels" />
@@ -164,8 +174,8 @@ export function SelectedWork() {
               </div>
               <h3 className="card__title">{p.title}</h3>
               <p className="card__desc">{p.desc}</p>
-              <span className="card__cta">VIEW CASE STUDY →</span>
-            </article>
+              <span className="card__cta">VIEW ON GITHUB →</span>
+            </a>
           ))}
         </div>
       </div>
@@ -176,10 +186,9 @@ export function SelectedWork() {
 /* --------------------------------------------------------------- CONTACT */
 export function Contact() {
   const links = [
-    ['EMAIL', 'hello@melodiexiong.com', 'mailto:hello@melodiexiong.com'],
-    ['GITHUB', '@melodiexiong', '#'],
-    ['LINKEDIN', 'in/melodiexiong', '#'],
-    ['RESUME', 'download PDF', '#'],
+    ['EMAIL', 'mxiong@uwaterloo.ca', 'mailto:mxiong@uwaterloo.ca'],
+    ['GITHUB', '@MelbearX123', 'https://github.com/MelbearX123'],
+    ['LINKEDIN', 'in/melodie-xiong', 'https://www.linkedin.com/in/melodie-xiong'],
   ]
   return (
     <section id="contact" className="section contact">
@@ -192,15 +201,22 @@ export function Contact() {
             is open.
           </p>
           <ul className="contact__links">
-            {links.map(([k, v, href]) => (
-              <li key={k}>
-                <a href={href} className="contact__link">
-                  <span className="contact__k">{k}</span>
-                  <span className="contact__v">{v}</span>
-                  <span className="contact__arrow">→</span>
-                </a>
-              </li>
-            ))}
+            {links.map(([k, v, href]) => {
+              const external = href.startsWith('http')
+              return (
+                <li key={k}>
+                  <a
+                    href={href}
+                    className="contact__link"
+                    {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                  >
+                    <span className="contact__k">{k}</span>
+                    <span className="contact__v">{v}</span>
+                    <span className="contact__arrow">→</span>
+                  </a>
+                </li>
+              )
+            })}
           </ul>
         </div>
 
