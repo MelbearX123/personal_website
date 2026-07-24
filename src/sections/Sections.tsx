@@ -109,19 +109,50 @@ export function About() {
 /* ------------------------------------------------------- WORK EXPERIENCE */
 export function Work() {
   const roles = [
-    { yr: '2024 — NOW', role: 'Product Designer / Front-end', org: 'Studio / Freelance', desc: 'End-to-end product design and implementation for early-stage teams.' },
-    { yr: '2022 — 2024', role: 'UX Engineer', org: 'Company Name', desc: 'Owned the design system and shipped the component library used across web.' },
-    { yr: '2021 — 2022', role: 'Front-end Developer', org: 'Company Name', desc: 'Built responsive marketing sites and internal dashboards.' },
-    { yr: '2020 — 2021', role: 'Design Intern', org: 'Company Name', desc: 'Prototyping, brand exploration and production design.' },
+    {
+      yr: 'May 2026 — Present',
+      role: 'Autonomy Developer',
+      org: 'Waterloo Aerial Robotics Group',
+      desc: 'Building the real-time computer-vision and messaging systems that feed an autonomous drone’s onboard localization.',
+    },
+    {
+      yr: 'May 2026 — Aug 2026',
+      role: 'Software Developer Intern',
+      org: 'Miovision',
+      desc: 'Modernized the frontend and optimized production data flows for a traffic-intelligence platform serving 17,000+ cities.',
+    },
+    {
+      yr: 'Sep 2025 — Dec 2025',
+      role: 'Software Developer Intern',
+      org: 'Port 443 Inc.',
+      desc: 'Refactored 20+ Angular/TypeScript components and engineered PATCH handling for 60+ .NET objects across three production brands serving 15,000+ users.',
+    },
   ]
   return (
     <section id="work" className="section work">
       <div className="container">
         <span className="eyebrow">// 02 — WORK EXPERIENCE</span>
         <h2 className="section__title work__title">Where I&apos;ve been</h2>
+
+        {/* Education sits slightly apart, above the work timeline. */}
+        <div className="edu">
+          <span className="edu__label">EDUCATION</span>
+          <div className="edu__row">
+            <div className="edu__main">
+              <h3 className="edu__school">University of Waterloo</h3>
+              <p className="edu__deg">BASc, Computer Engineering — Honours</p>
+            </div>
+            <div className="edu__meta">
+              <span className="edu__yr">Sept 2024 — May 2029</span>
+              <span className="edu__loc">Waterloo, ON</span>
+            </div>
+          </div>
+        </div>
+
+        <span className="work__sublabel">EXPERIENCE</span>
         <ol className="timeline">
           {roles.map((r) => (
-            <li className="timeline__item" key={r.yr}>
+            <li className="timeline__item" key={r.org}>
               <div className="timeline__yr">{r.yr}</div>
               <div className="timeline__main">
                 <h3 className="timeline__role">
@@ -146,7 +177,7 @@ export function SelectedWork() {
       title: 'ChromaForge',
       tag: 'Computer Vision · Python',
       desc: 'A PyTorch/CUDA tool that isolates and separates the colour layers of an image to generate custom background assets for games.',
-      href: 'https://github.com/MelbearX123/cv_monorepo',
+      href: 'https://github.com/MelbearX123/cv_monorepo/tree/main/projects/chromaforge',
     },
     {
       n: '02',
