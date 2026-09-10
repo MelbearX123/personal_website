@@ -1,29 +1,19 @@
 import { useEffect, useState } from 'react'
 import './Nav.css'
 
-/*
-  Fixed top navigation. Every link is an in-page anchor, so clicking one
-  glides the viewport to that section (smooth scroll is set globally in
-  index.css). A small scroll-spy highlights whichever section is on screen.
-*/
-// `id` is the section the link scrolls to / the scroll-spy watches. The
-// "Resume" link lands on the Contacts section, where the resume download and
-// contact channels live.
 const LINKS = [
   { id: 'about', label: 'About' },
   { id: 'work', label: 'Work' },
   { id: 'projects', label: 'Projects' },
-  { id: 'contact', label: 'Resume' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 export default function Nav() {
   const [active, setActive] = useState('about')
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    // Flip to the dark-glass style only once we've scrolled most of the way
-    // through the landing (where its pale background is fading to the dark
-    // page), not at the very first pixel of scroll.
     const onScroll = () => {
       const hero = document.getElementById('top')
       const threshold = (hero ? hero.offsetHeight : window.innerHeight) * 0.72
@@ -35,7 +25,6 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
-    // Highlight the section currently nearest the top of the viewport.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -51,11 +40,26 @@ export default function Nav() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 700) setMenuOpen(false)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
+    if (menuOpen) {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = prev }
+    }
+  }, [menuOpen])
+
   return (
-    <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+    <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${menuOpen ? 'nav--open' : ''}`}>
       <div className="nav__inner container">
-        <a href="#top" className="nav__brand">
-          <span className="nav__brandmark" aria-hidden="true" />
+        <a href="#top" className="nav__brand" onClick={() => setMenuOpen(false)}>
           <span className="nav__brandtext">MELODIE&nbsp;<span className="nav__brandx">X</span></span>
         </a>
 
@@ -66,15 +70,33 @@ export default function Nav() {
               href={`#${l.id}`}
               className={`nav__link ${active === l.id ? 'is-active' : ''}`}
             >
-              <span className="nav__num">0{LINKS.indexOf(l) + 1}</span>
               {l.label}
             </a>
           ))}
         </nav>
 
-        <div className="nav__status">
-          <span className="nav__dot" /> ONLINE
-        </div>
+        <button
+          type="button"
+          className="nav__toggle"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span /><span /><span />
+        </button>
+      </div>
+
+      <div className="nav__panel" role="dialog" aria-hidden={!menuOpen}>
+        {LINKS.map((l) => (
+          <a
+            key={l.id}
+            href={`#${l.id}`}
+            className={`nav__panel-link ${active === l.id ? 'is-active' : ''}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            {l.label}
+          </a>
+        ))}
       </div>
     </header>
   )
