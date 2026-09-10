@@ -260,15 +260,58 @@ export function About() {
   return (
     <section id="about" className="section about">
       <div className="container">
-        <span className="eyebrow">About Me</span>
-        <div className="about__body">
+        <div className="about__card">
+          <span className="eyebrow about__eyebrow">About Me</span>
           <div className="about__lead">
             <p className="about__p">
               I'm a computer engineering student at the University of Waterloo. I like building software
               that makes people's lives easier and more fun. Currently interested and dabbling in computer
               vision
             </p>
-            <p className="about__p">Hobbies include video games, gym, and chinese violin aka erhu</p>
+            <p className="about__p">Hobbies include video games, gym, music, and playing chinese violin</p>
+          </div>
+
+          <div className="about__notes" aria-hidden="true">
+            <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+              <g fill="var(--pink-soft)" stroke="var(--pink-soft)" strokeLinecap="round">
+                {/* pair 1 — beamed eighth notes */}
+                <g className="about__notes-a">
+                  <ellipse cx="20" cy="60"  rx="7" ry="5" transform="rotate(-18 20 60)"/>
+                  <ellipse cx="52" cy="52"  rx="7" ry="5" transform="rotate(-18 52 52)"/>
+                  <line x1="27" y1="60" x2="27" y2="14" strokeWidth="2"/>
+                  <line x1="59" y1="52" x2="59" y2="14" strokeWidth="2"/>
+                  <line x1="27" y1="14" x2="59" y2="14" strokeWidth="6"/>
+                </g>
+              </g>
+            </svg>
+
+            <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+              <g fill="var(--violet)" stroke="var(--violet)" strokeLinecap="round">
+                {/* pair 2 — a triplet with a beam */}
+                <g className="about__notes-b">
+                  <ellipse cx="15" cy="70" rx="7" ry="5" transform="rotate(-18 15 70)"/>
+                  <ellipse cx="45" cy="60" rx="7" ry="5" transform="rotate(-18 45 60)"/>
+                  <ellipse cx="75" cy="66" rx="7" ry="5" transform="rotate(-18 75 66)"/>
+                  <line x1="22" y1="70" x2="22" y2="18" strokeWidth="2"/>
+                  <line x1="52" y1="60" x2="52" y2="18" strokeWidth="2"/>
+                  <line x1="82" y1="66" x2="82" y2="18" strokeWidth="2"/>
+                  <line x1="22" y1="18" x2="82" y2="18" strokeWidth="6"/>
+                </g>
+              </g>
+            </svg>
+
+            <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+              <g fill="var(--pink)" stroke="var(--pink)" strokeLinecap="round">
+                {/* pair 3 — single beamed pair, offset */}
+                <g className="about__notes-c">
+                  <ellipse cx="30" cy="66" rx="7" ry="5" transform="rotate(-18 30 66)"/>
+                  <ellipse cx="60" cy="58" rx="7" ry="5" transform="rotate(-18 60 58)"/>
+                  <line x1="37" y1="66" x2="37" y2="20" strokeWidth="2"/>
+                  <line x1="67" y1="58" x2="67" y2="20" strokeWidth="2"/>
+                  <line x1="37" y1="20" x2="67" y2="20" strokeWidth="6"/>
+                </g>
+              </g>
+            </svg>
           </div>
         </div>
       </div>

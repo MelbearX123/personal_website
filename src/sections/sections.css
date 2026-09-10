@@ -304,11 +304,44 @@
 .eyebrow::before { display: none; }   /* remove the neon bar from index.css */
 
 /* ============================================================= ABOUT ==== */
-.about__body {
+/*
+  Card sits on a soft violet gradient so the about copy reads as its
+  own panel, and gives the bobbing note group a home on the right.
+*/
+.about__card {
+  position: relative;
+  border-radius: 20px;
+  padding: 40px 48px 56px;
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 50px;
-  align-items: start;
+  grid-template-columns: 1fr 220px;
+  column-gap: 40px;
+  row-gap: 22px;
+  align-items: center;
+  background:
+    radial-gradient(600px 300px at 90% 30%, rgba(255, 43, 214, 0.18), transparent 65%),
+    linear-gradient(135deg, rgba(176, 38, 255, 0.32) 0%, rgba(77, 208, 255, 0.14) 100%);
+  border: 2.5px solid rgba(176, 38, 255, 0.55);
+  box-shadow:
+    0 20px 60px rgba(176, 38, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+/* soft neon glow blooming out of the bottom edge of the card */
+.about__card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -60px;
+  height: 140px;
+  background: radial-gradient(60% 100% at 50% 0%, rgba(255, 43, 214, 0.35), transparent 70%);
+  pointer-events: none;
+  filter: blur(6px);
+}
+/* eyebrow inside the card, spans full width, sits above the copy */
+.about__eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
 }
 .about__lead .about__p {
   color: var(--text-dim);
@@ -317,6 +350,50 @@
   font-size: 1rem;
 }
 .about__lead .about__p:first-child { margin-top: 0; }
+
+/*
+  Bobbing note group — three beamed-note SVGs stacked to the right,
+  each drifting up and down on its own schedule so the cluster looks
+  alive without marching in lockstep.
+*/
+.about__notes {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  align-items: end;
+  height: 160px;
+  filter:
+    drop-shadow(0 0 6px rgba(255, 43, 214, 0.5))
+    drop-shadow(0 0 18px rgba(176, 38, 255, 0.35));
+}
+.about__notes svg {
+  width: 100%;
+  height: 100%;
+}
+.about__notes-a,
+.about__notes-b,
+.about__notes-c {
+  transform-origin: center;
+  animation: about-notes-bob 6.4s ease-in-out infinite;
+  will-change: transform;
+}
+.about__notes-a { animation-duration: 6.4s; animation-delay: 0s;    }
+.about__notes-b { animation-duration: 7.2s; animation-delay: -1.1s; }
+.about__notes-c { animation-duration: 6.8s; animation-delay: -2.4s; }
+
+@keyframes about-notes-bob {
+  0%, 100% { transform: translateY(-8px); }
+  50%      { transform: translateY( 8px); }
+}
+
+@media (max-width: 780px) {
+  .about__card {
+    grid-template-columns: 1fr;
+    padding: 30px 26px;
+  }
+  .about__notes { height: 120px; }
+}
 
 /* Small keyed side list */
 .spec {
