@@ -3,6 +3,10 @@ import miovisionLogo from '../assets/miovisonlogo.png'
 import port443Logo from '../assets/port443logo.png'
 import wargLogo from '../assets/warglogo.png'
 import waterlooLogo from '../assets/waterloologo.png'
+import lampPreview from '../assets/lamp.png'
+import chromaforgePreview from '../assets/chromaforge.png'
+import handcursorPreview from '../assets/preview-handcursorx.svg'
+import modbotPreview from '../assets/modbot.png'
 
 /*
   All page sections for the music-themed rebuild — restrained version.
@@ -92,21 +96,21 @@ export function Work() {
       org: 'Miovision',
       logo: miovisionLogo,
       yr: 'May 2026 — Aug 2026',
-      desc: 'Modernized the frontend and optimized production data flows for a traffic-intelligence platform serving 17,000+ cities.',
+      desc: 'Modernized frontend and optimized production data flows for a traffic-intelligence platform serving 17,000+ cities',
     },
     {
       role: 'Software Developer Intern',
       org: 'Port 443 Inc.',
       logo: port443Logo,
       yr: 'Sep 2025 — Dec 2025',
-      desc: 'Refactored frontend and backend API handling across three production brands serving 15,000+ users.',
+      desc: 'Refactored frontend and backend API handling across three production brands serving 15,000+ users',
     },
     {
       role: 'Autonomy Developer',
       org: 'Waterloo Aerial Robotics Group',
       logo: wargLogo,
       yr: 'May 2026 — Present',
-      desc: 'Building the real-time computer-vision and messaging systems that feed an autonomous drone’s onboard localization.',
+      desc: 'Building the real-time computer-vision and messaging systems that feed an autonomous drone’s onboard localization',
     },
   ]
   return (
@@ -154,31 +158,63 @@ export function Work() {
 export function SelectedWork() {
   const projects = [
     {
+      title: 'Interactive Lamp Sim',
+      desc: 'A simulated 5-DOF lamp character that reacts to people with vision, speech and motion.',
+      stack: ['Python', 'OpenCV', 'MuJoCo'],
+      href: 'https://github.com/MelbearX123/cv_monorepo/tree/main/projects/interactive_lamp',
+      preview: lampPreview,
+    },
+    {
       title: 'ChromaForge',
-      tag: 'Computer Vision · Python',
-      desc: 'A PyTorch/CUDA tool that isolates and separates the colour layers of an image to generate custom background assets for games.',
+      desc: 'Splits an image into its colour layers to generate custom game background assets.',
+      stack: ['Python', 'PyTorch', 'Numpy'],
       href: 'https://github.com/MelbearX123/cv_monorepo/tree/main/projects/chromaforge',
+      preview: chromaforgePreview,
     },
     {
       title: 'handcursorx',
-      tag: 'Computer Vision · Python',
-      desc: 'Hands-free cursor control from a webcam — MediaPipe hand tracking maps fingertip motion and pinch gestures to mouse movement, clicks and scrolling.',
+      desc: 'Webcam-driven hands-free cursor control — pinch to click, move to point, gesture to scroll.',
+      stack: ['Python', 'MediaPipe', 'OpenCV'],
       href: 'https://github.com/MelbearX123/handcursorx',
+      preview: handcursorPreview,
+    },
+    {
+      title: 'Modbot',
+      desc: 'A Discord moderation bot that uses the OpenAI moderation API to flag inappropriate messages in server chats.',
+      stack: ['JavaScript', 'discord.js', 'OpenAI API'],
+      href: 'https://github.com/MelbearX123/Melbot',
+      preview: modbotPreview,
     },
   ]
   return (
     <section id="projects" className="section selected">
       <div className="container">
-        <span className="eyebrow">03 — Selected work</span>
+        <span className="eyebrow">Selected work</span>
         <div className="releases">
           {projects.map((p) => (
             <a className="release" key={p.title} href={p.href} target="_blank" rel="noreferrer">
-              <div className="release__head">
+              <div
+                className="release__preview"
+                aria-hidden="true"
+                style={
+                  p.preview
+                    ? {
+                        backgroundImage: `url(${p.preview})`,
+                        backgroundSize: p.fit ?? 'cover',
+                      }
+                    : undefined
+                }
+              />
+              <div className="release__body">
                 <h3 className="release__title">{p.title}</h3>
-                <span className="release__tag">{p.tag}</span>
+                <p className="release__desc">{p.desc}</p>
+                <ul className="release__stack">
+                  {p.stack.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ul>
+                <span className="release__cta">View on GitHub →</span>
               </div>
-              <p className="release__desc">{p.desc}</p>
-              <span className="release__cta">View on GitHub →</span>
             </a>
           ))}
         </div>
@@ -197,7 +233,7 @@ export function Contact() {
   return (
     <section id="contact" className="section contact">
       <div className="container">
-        <span className="eyebrow">04 — Contact</span>
+        <span className="eyebrow">Contact</span>
         <h2 className="contact__title">Let&apos;s build something.</h2>
         <p className="contact__p">
           Have a project, a role, or just want to trade references?
