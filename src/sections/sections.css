@@ -461,69 +461,49 @@
   text-shadow: 0 0 8px rgba(255, 43, 214, 0.35);
 }
 
-/* ============================================================ CONTACT === */
-.contact__title {
-  font-family: var(--font-title);
-  font-weight: 500;
-  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
-  color: var(--text);
-  letter-spacing: -0.01em;
-  margin-bottom: 12px;
-}
-.contact__p {
-  color: var(--text-dim);
-  margin-bottom: 40px;
-  max-width: 52ch;
-  font-size: 1rem;
-}
-
-.channels {
-  list-style: none;
+/* ============================================================= FOOTER === */
+.footer {
   border-top: 1px solid var(--hairline);
+  padding: 26px 0;
+  margin-top: 60px;
+  scroll-margin-top: 84px;   /* nav offset when "Contact" anchor jumps here */
 }
-.channels li { border-bottom: 1px solid var(--hairline); }
-.channels__link {
-  display: grid;
-  grid-template-columns: 110px 1fr 24px;
+.footer__inner {
+  display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 20px 0;
-  transition: background 0.2s ease, padding 0.2s ease;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
 }
-.channels__link:hover {
-  background: rgba(176, 38, 255, 0.05);
-  padding-left: 10px;
-}
-.channels__link:hover .channels__arrow {
-  color: var(--pink);
-  transform: translateX(4px);
-}
-.channels__k {
+.footer__copy {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
   color: var(--text-faint);
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
-.channels__v {
-  font-family: var(--font-body);
-  font-size: 0.98rem;
-  color: var(--text);
+.footer__links {
+  list-style: none;
+  display: flex;
+  gap: 8px;
 }
-.channels__arrow {
-  color: var(--text-faint);
-  text-align: right;
-  transition: color 0.2s ease, transform 0.2s ease;
+.footer__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  color: var(--text-dim);
+  border: 1px solid var(--hairline);
+  background: rgba(176, 38, 255, 0.03);
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
-
-/* Footer */
-.footer {
-  margin-top: 70px;
-  padding-top: 22px;
-  border-top: 1px solid var(--hairline);
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  color: var(--text-faint);
+.footer__icon svg { width: 22px; height: 22px; }
+.footer__icon:hover {
+  color: var(--pink-soft);
+  background: rgba(176, 38, 255, 0.10);
+  border-color: rgba(176, 38, 255, 0.45);
+  transform: translateY(-1px);
 }
 
 /* ============================================================ RESPONSIVE = */

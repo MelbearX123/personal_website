@@ -198,10 +198,7 @@ export function SelectedWork() {
                 aria-hidden="true"
                 style={
                   p.preview
-                    ? {
-                        backgroundImage: `url(${p.preview})`,
-                        backgroundSize: p.fit ?? 'cover',
-                      }
+                    ? { backgroundImage: `url(${p.preview})` }
                     : undefined
                 }
               />
@@ -223,46 +220,63 @@ export function SelectedWork() {
   )
 }
 
-/* --------------------------------------------------------------- CONTACT */
+/* --------------------------------------------------------------- FOOTER */
+/*
+  The "Contact" nav item scrolls here. We show a compact footer strip
+  with three icon links (mail / GitHub / LinkedIn) and a copyright.
+*/
 export function Contact() {
-  const channels = [
-    ['Email',    'mxiong@uwaterloo.ca',  'mailto:mxiong@uwaterloo.ca'],
-    ['GitHub',   '@MelbearX123',          'https://github.com/MelbearX123'],
-    ['LinkedIn', 'in/melodie-xiong',      'https://www.linkedin.com/in/melodie-xiong'],
-  ]
   return (
-    <section id="contact" className="section contact">
-      <div className="container">
-        <span className="eyebrow">Contact</span>
-        <h2 className="contact__title">Let&apos;s build something.</h2>
-        <p className="contact__p">
-          Have a project, a role, or just want to trade references?
-          The line is open.
-        </p>
+    <footer id="contact" className="footer">
+      <div className="container footer__inner">
+        <span className="footer__copy">© 2026 · Melodie Xiong</span>
 
-        <ul className="channels">
-          {channels.map(([k, v, href]) => {
-            const external = href.startsWith('http')
-            return (
-              <li key={k}>
-                <a
-                  href={href}
-                  className="channels__link"
-                  {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                >
-                  <span className="channels__k">{k}</span>
-                  <span className="channels__v">{v}</span>
-                  <span className="channels__arrow">→</span>
-                </a>
-              </li>
-            )
-          })}
+        <ul className="footer__links">
+          <li>
+            <a
+              href="mailto:mxiong@uwaterloo.ca"
+              className="footer__icon"
+              aria-label="Email Melodie"
+            >
+              {/* mail — envelope glyph */}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
+                   aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="M3 7l9 6 9-6"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/MelbearX123"
+              className="footer__icon"
+              aria-label="GitHub"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {/* github — Octocat mark, simplified */}
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.57.1.79-.25.79-.55v-1.94c-3.2.69-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.26 3.35.96.1-.75.4-1.26.72-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.18-3.09-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.77.12 3.06.73.81 1.18 1.84 1.18 3.09 0 4.41-2.69 5.38-5.26 5.66.41.36.78 1.06.78 2.13v3.16c0 .31.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.linkedin.com/in/melodie-xiong"
+              className="footer__icon"
+              aria-label="LinkedIn"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {/* linkedin — the "in" mark */}
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3v-11zM9.5 9.5h3.8v1.5h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.55 4.78 5.87v5.58h-4v-4.95c0-1.18-.02-2.7-1.7-2.7-1.7 0-1.96 1.28-1.96 2.62v5.03h-4v-11z"/>
+              </svg>
+            </a>
+          </li>
         </ul>
-
-        <footer className="footer">
-          <span>© 2026 · Melodie Xiong</span>
-        </footer>
       </div>
-    </section>
+    </footer>
   )
 }
