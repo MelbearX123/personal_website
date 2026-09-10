@@ -1,4 +1,8 @@
 import './sections.css'
+import miovisionLogo from '../assets/miovisonlogo.png'
+import port443Logo from '../assets/port443logo.png'
+import wargLogo from '../assets/warglogo.png'
+import waterlooLogo from '../assets/waterloologo.png'
 
 /*
   All page sections for the music-themed rebuild — restrained version.
@@ -26,8 +30,11 @@ function VinylDisc({
       <div className="disc__glow" />
       <div className="disc__platter">
         <div className="disc__grooves" />
-        <div className="disc__label" />
-        <div className="disc__spindle" />
+        <div className="disc__shine" />
+        <div className="disc__label">
+          <span className="disc__label-ring" />
+          <span className="disc__spindle" />
+        </div>
       </div>
     </div>
   )
@@ -39,21 +46,13 @@ export function Hero() {
     <section id="top" className="hero">
       <div className="container hero__inner">
         <div className="hero__left">
-          <p className="hero__eyebrow">Melodie Xiong · Portfolio ’26</p>
-
           <h1 className="hero__name">
-            Designer &amp; developer building tactile,
-            systems-minded interfaces.
+            <span className="hero__line hero__line--2"> MELODIE XIONG</span>
           </h1>
 
           <p className="hero__tag">
-            Somewhere between a mixing desk and a dream.
+            <em>I'm a frontend-focused fullstack dev, interested in computer vision</em>
           </p>
-
-          <div className="hero__cta">
-            <a href="#projects" className="btn">View work →</a>
-            <a href="#contact" className="btn btn--ghost">Get in touch</a>
-          </div>
         </div>
 
         <div className="hero__right">
@@ -66,40 +65,19 @@ export function Hero() {
 
 /* ----------------------------------------------------------------- ABOUT */
 export function About() {
-  const specs = [
-    ['Role',   'Product / UX Engineer'],
-    ['Based',  'Toronto, CA'],
-    ['Focus',  'Design systems · Front-end'],
-    ['Status', 'Open to work'],
-  ]
   return (
     <section id="about" className="section about">
       <div className="container">
-        <span className="eyebrow">01 — About</span>
+        <span className="eyebrow">About Me</span>
         <div className="about__body">
           <div className="about__lead">
             <p className="about__p">
-              I&apos;m Melodie — I work across the seam where design meets
-              engineering. I like interfaces with weight and logic:
-              readable hierarchies, honest states, motion that means
-              something.
+              I'm a computer engineering student at the University of Waterloo. I like building software
+              that makes people's lives easier and more fun. Currently interested and dabbling in computer
+              vision
             </p>
-            <p className="about__p">
-              Previously I&apos;ve shipped design systems, marketing sites
-              and internal tooling for teams that care about craft.
-            </p>
+            <p className="about__p">Hobbies include video games, gym, and chinese violin aka erhu</p>
           </div>
-
-          <aside className="spec">
-            <dl className="spec__rows">
-              {specs.map(([k, v]) => (
-                <div className="spec__row" key={k}>
-                  <dt>{k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </aside>
         </div>
       </div>
     </section>
@@ -110,39 +88,31 @@ export function About() {
 export function Work() {
   const tracks = [
     {
-      role: 'Autonomy Developer',
-      org: 'Waterloo Aerial Robotics Group',
-      yr: 'May 2026 — Present',
-      desc: 'Building the real-time computer-vision and messaging systems that feed an autonomous drone’s onboard localization.',
-    },
-    {
       role: 'Software Developer Intern',
       org: 'Miovision',
+      logo: miovisionLogo,
       yr: 'May 2026 — Aug 2026',
       desc: 'Modernized the frontend and optimized production data flows for a traffic-intelligence platform serving 17,000+ cities.',
     },
     {
       role: 'Software Developer Intern',
       org: 'Port 443 Inc.',
+      logo: port443Logo,
       yr: 'Sep 2025 — Dec 2025',
-      desc: 'Refactored 20+ Angular/TypeScript components and engineered PATCH handling for 60+ .NET objects across three production brands serving 15,000+ users.',
+      desc: 'Refactored frontend and backend API handling across three production brands serving 15,000+ users.',
+    },
+    {
+      role: 'Autonomy Developer',
+      org: 'Waterloo Aerial Robotics Group',
+      logo: wargLogo,
+      yr: 'May 2026 — Present',
+      desc: 'Building the real-time computer-vision and messaging systems that feed an autonomous drone’s onboard localization.',
     },
   ]
   return (
     <section id="work" className="section work">
       <div className="container">
-        <span className="eyebrow">02 — Work</span>
-
-        <div className="edu">
-          <div className="edu__main">
-            <h3 className="edu__school">University of Waterloo</h3>
-            <p className="edu__deg">BASc, Computer Engineering — Honours</p>
-          </div>
-          <div className="edu__meta">
-            <span className="edu__yr">Sept 2024 — May 2029</span>
-            <span className="edu__loc">Waterloo, ON</span>
-          </div>
-        </div>
+        <span className="eyebrow">Experience</span>
 
         <ol className="tracklist">
           {tracks.map((t) => (
@@ -150,7 +120,10 @@ export function Work() {
               <div className="track__main">
                 <h3 className="track__title">
                   {t.role}{' '}
-                  <span className="track__org">— {t.org}</span>
+                  <span className="track__org">
+                    — {t.org}
+                    <img className="track__logo" src={t.logo} alt="" aria-hidden="true" />
+                  </span>
                 </h3>
                 <p className="track__desc">{t.desc}</p>
               </div>
@@ -158,6 +131,20 @@ export function Work() {
             </li>
           ))}
         </ol>
+
+        <div className="edu">
+          <div className="edu__main">
+            <h3 className="edu__school">
+              University of Waterloo
+              <img className="edu__logo" src={waterlooLogo} alt="" aria-hidden="true" />
+            </h3>
+            <p className="edu__deg">BASc, Computer Engineering — Honours, 3x Excellent Standing</p>
+          </div>
+          <div className="edu__meta">
+            <span className="edu__yr">Sept 2024 — May 2029</span>
+            <span className="edu__loc">Waterloo, ON</span>
+          </div>
+        </div>
       </div>
     </section>
   )

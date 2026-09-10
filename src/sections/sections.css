@@ -30,50 +30,32 @@
 }
 .hero__inner {
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1.6fr 1fr;
   align-items: center;
-  gap: 60px;
+  gap: 40px;
   width: 100%;
 }
 
-.hero__left { position: relative; z-index: 2; max-width: 520px; }
+.hero__left { position: relative; z-index: 2; }
 
-.hero__eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  color: var(--text-dim);
-  margin-bottom: 32px;
-}
-.hero__eyebrow::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--pink);
-  box-shadow: 0 0 10px var(--pink);
-  vertical-align: middle;
-  margin-right: 10px;
-  margin-bottom: 2px;
-}
-
-/* Name/tagline — moderate size, no chrome fill, no glow */
 .hero__name {
-  font-family: var(--font-title);
+  font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-  line-height: 1.35;
-  letter-spacing: -0.005em;
+  font-size: clamp(3.2rem, 6vw, 6.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  margin-bottom: 26px;
+}
+.hero__line { display: block; }
+.hero__line--2 {
   color: var(--text);
-  margin-bottom: 20px;
 }
 
 .hero__tag {
   color: var(--text-dim);
-  font-size: 1rem;
+  font-size: 1.03rem;
+  line-height: 1.55;
   margin-bottom: 34px;
-  max-width: 46ch;
 }
 
 .hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -140,11 +122,12 @@
   height: 100%;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 32% 30%, rgba(255,255,255,0.04), transparent 45%),
-    radial-gradient(circle at 50% 50%, #14091f 0%, #05020c 100%);
+    radial-gradient(circle at 32% 30%, rgba(255,255,255,0.06), transparent 45%),
+    radial-gradient(circle at 50% 50%, #12081f 0%, #05020c 100%);
   box-shadow:
-    inset 0 0 0 1px rgba(176, 38, 255, 0.20),
-    0 0 40px rgba(176, 38, 255, 0.20);
+    inset 0 0 0 1px rgba(176, 38, 255, 0.28),
+    0 0 60px rgba(176, 38, 255, 0.30),
+    0 0 120px rgba(255, 43, 214, 0.18);
   overflow: hidden;
 }
 
@@ -156,41 +139,90 @@
   background:
     repeating-radial-gradient(
       circle at 50% 50%,
-      rgba(255, 255, 255, 0.025) 0px,
-      rgba(255, 255, 255, 0.025) 1px,
+      rgba(176, 38, 255, 0.05) 0px,
+      rgba(176, 38, 255, 0.05) 1px,
       transparent 1px,
       transparent 5px
+    ),
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
     );
-  mask-image: radial-gradient(circle at 50% 50%, transparent 24%, #000 26%, #000 96%, transparent 100%);
+  mask-image: radial-gradient(circle at 50% 50%, transparent 22%, #000 24%, #000 96%, transparent 100%);
 }
 
-/* Center label — smaller, restrained gradient, no ring/spindle text */
+/* Rotating specular highlight — the "shine" that sweeps across the disc */
+.disc__shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    conic-gradient(from 220deg,
+      transparent 0deg,
+      rgba(255, 43, 214, 0.10) 30deg,
+      rgba(176, 38, 255, 0.18) 60deg,
+      rgba(77, 208, 255, 0.10) 90deg,
+      transparent 130deg,
+      transparent 360deg);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Center label */
 .disc__label {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 34%;
-  height: 34%;
+  width: 38%;
+  height: 38%;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 40%, #ff8ee9 0%, #b026ff 55%, #4dd0ff 110%);
+  background:
+    radial-gradient(circle at 50% 40%, #ff8ee9 0%, #b026ff 45%, #4dd0ff 100%);
+  display: grid;
+  place-items: center;
   box-shadow:
-    0 0 20px rgba(176, 38, 255, 0.5),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    0 0 30px rgba(176, 38, 255, 0.7),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.35),
+    inset 0 0 20px rgba(0, 0, 0, 0.35);
 }
-
+.disc__label-ring {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.45);
+}
+.disc__label-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.6rem;
+  color: #0b0714;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  z-index: 1;
+}
+.disc__label-sub {
+  position: absolute;
+  bottom: 14%;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.32em;
+  color: rgba(11, 7, 20, 0.75);
+}
 .disc__spindle {
   position: absolute;
-  width: 5%;
-  height: 5%;
+  width: 9%;
+  height: 9%;
   border-radius: 50%;
-  background: #06040b;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 40% 40%, #f4ecff, #6d5f8a 60%, #241645);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.4), inset 0 0 4px rgba(0,0,0,0.6);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
   z-index: 2;
 }
 
-.disc--spin .disc__platter { animation: spin 14s linear infinite; }
+.disc--spin .disc__platter { animation: spin 10s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================= EYEBROW == */
@@ -307,6 +339,33 @@
 .track__org {
   color: var(--text-dim);
   font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.track__logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: contain;
+  background: rgba(255,255,255,0.03);
+  padding: 3px;
+  box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.18);
+  vertical-align: middle;
+}
+.edu__school {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.edu__logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: rgba(255,255,255,0.04);
+  padding: 3px;
+  box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.18);
 }
 .track__desc {
   color: var(--text-dim);

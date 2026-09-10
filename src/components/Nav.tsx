@@ -47,7 +47,7 @@ export default function Nav() {
     <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
       <div className="nav__inner container">
         <a href="#top" className="nav__brand">
-          <span className="nav__brandmark" aria-hidden="true" />
+          {/* <span className="nav__brandmark" aria-hidden="true" /> */}
           <span className="nav__brandtext">MELODIE&nbsp;<span className="nav__brandx">X</span></span>
         </a>
 
@@ -58,15 +58,11 @@ export default function Nav() {
               href={`#${l.id}`}
               className={`nav__link ${active === l.id ? 'is-active' : ''}`}
             >
-              <span className="nav__num">0{i + 1}</span>
               {l.label}
             </a>
           ))}
         </nav>
 
-        <div className="nav__status">
-          <span className="nav__dot" /> ONLINE
-        </div>
       </div>
     </header>
   )
