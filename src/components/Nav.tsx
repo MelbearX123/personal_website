@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Nav.css'
 
-/*
-  Fixed top navigation. Every link is an in-page anchor.
-  A small scroll-spy highlights whichever section is on screen.
-*/
 const LINKS = [
   { id: 'about',    label: 'About' },
   { id: 'work',     label: 'Work' },
@@ -15,6 +11,7 @@ const LINKS = [
 export default function Nav() {
   const [active, setActive] = useState('about')
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
@@ -43,16 +40,32 @@ export default function Nav() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 700) setMenuOpen(false)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  // Body scroll-lock while the mobile panel is open.
+  useEffect(() => {
+    if (menuOpen) {
+      const prev = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => { document.body.style.overflow = prev }
+    }
+  }, [menuOpen])
+
   return (
-    <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
+    <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${menuOpen ? 'nav--open' : ''}`}>
       <div className="nav__inner container">
-        <a href="#top" className="nav__brand">
-          {/* <span className="nav__brandmark" aria-hidden="true" /> */}
+        <a href="#top" className="nav__brand" onClick={() => setMenuOpen(false)}>
           <span className="nav__brandtext">MELODIE&nbsp;<span className="nav__brandx">X</span></span>
         </a>
 
         <nav className="nav__links">
-          {LINKS.map((l, i) => (
+          {LINKS.map((l) => (
             <a
               key={l.id}
               href={`#${l.id}`}
@@ -63,6 +76,33 @@ export default function Nav() {
           ))}
         </nav>
 
+        {/*
+          Hamburger — only rendered visually below the mobile breakpoint
+          (see .nav__toggle in Nav.css). Toggles the .nav--open state.
+        */}
+        <button
+          type="button"
+          className="nav__toggle"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span /><span /><span />
+        </button>
+      </div>
+
+      {/* Slide-down mobile panel with the same links. */}
+      <div className="nav__panel" role="dialog" aria-hidden={!menuOpen}>
+        {LINKS.map((l) => (
+          <a
+            key={l.id}
+            href={`#${l.id}`}
+            className={`nav__panel-link ${active === l.id ? 'is-active' : ''}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            {l.label}
+          </a>
+        ))}
       </div>
     </header>
   )

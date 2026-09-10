@@ -88,6 +88,78 @@
   box-shadow: 0 0 8px var(--pink);
 }
 
+.nav__toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(176, 38, 255, 0.08);
+  border: 1px solid rgba(176, 38, 255, 0.35);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.nav__toggle:hover {
+  background: rgba(176, 38, 255, 0.16);
+  border-color: var(--violet);
+}
+.nav__toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.nav--open .nav__toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav--open .nav__toggle span:nth-child(2) { opacity: 0; }
+.nav--open .nav__toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.nav__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(6, 4, 12, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.nav--open .nav__panel { max-height: 400px; }
+
+.nav__panel-link {
+  padding: 16px 28px;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--hairline);
+  transition: color 0.2s ease, background 0.2s ease, padding-left 0.2s ease;
+}
+.nav__panel-link:last-child { border-bottom: none; }
+.nav__panel-link:hover,
+.nav__panel-link:focus-visible {
+  color: var(--text);
+  background: rgba(176, 38, 255, 0.08);
+  padding-left: 36px;
+}
+.nav__panel-link.is-active {
+  color: var(--text);
+  border-left: 2px solid var(--pink);
+}
+
 @media (max-width: 700px) {
-  .nav__links { display: none; }
+  .nav__links  { display: none; }
+  .nav__toggle { display: inline-flex; }
+}
+@media (min-width: 701px) {
+  .nav__panel  { display: none; }
 }
