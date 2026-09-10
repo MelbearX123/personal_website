@@ -1,50 +1,24 @@
-/*
-  --------------------------------------------------------
-  Dark, near-black ground with neon purple / blue / pink glows used where
-  the eye needs to land: hero disc, hover states, dividers, headings.
-  The rest of the surface is deliberately quiet so the neon reads.
-*/
 :root {
-  /* --- core palette ------------------------------------------------ */
-  --ink-000:    #06040b;   /* deep near-black ground */
-  --ink-050:    #0b0714;   /* body base */
-  --ink-100:    #110a1f;   /* panel */
-  --ink-200:    #1a1030;   /* panel raised */
-  --ink-300:    #241645;
-  --ink-400:    #2f1c5c;
+  --ink-000: #06040b;
+  --ink-050: #0b0714;
 
-  --violet:     #b026ff;   /* neon purple — primary accent */
-  --violet-soft:#8a4bff;
-  --pink:       #ff2bd6;   /* neon pink — highlight */
-  --pink-soft:  #ff6be4;
-  --blue:       #4dd0ff;   /* neon cyan-blue — cool accent */
-  --blue-soft:  #7ce0ff;
+  --violet: #b026ff;
+  --pink: #ff2bd6;
+  --pink-soft: #ff6be4;
+  --blue: #4dd0ff;
+  --blue-soft: #7ce0ff;
 
-  /* --- semantic tokens -------------------------------------------- */
-  --bg:         var(--ink-050);
-  --text:       #f4ecff;
-  --text-dim:   #b5a6d6;
+  --text: #f4ecff;
+  --text-dim: #b5a6d6;
   --text-faint: #6d5f8a;
-  --hairline:   rgba(176, 38, 255, 0.18);
-  --hairline-strong: rgba(255, 43, 214, 0.42);
-
-  /* Chrome / holographic gradient for text and bars */
-  --chrome:      linear-gradient(180deg, #f4ecff 0%, #ff8ee9 30%, #b026ff 55%, #4dd0ff 80%, #f4ecff 100%);
-  --neon-line:   linear-gradient(90deg, transparent, var(--violet) 20%, var(--pink) 50%, var(--blue) 80%, transparent);
-  --panel:       linear-gradient(180deg, rgba(26,16,48,0.75) 0%, rgba(11,7,20,0.85) 100%);
+  --hairline: rgba(176, 38, 255, 0.18);
 
   --font-display: 'Unbounded', 'Chakra Petch', sans-serif;
-  --font-title:   'Chakra Petch', sans-serif;
-  --font-mono:    'Space Mono', monospace;
-  --font-body:    'Inter', sans-serif;
+  --font-title: 'Chakra Petch', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'Inter', sans-serif;
 
-  --radius: 16px;
   --maxw: 1180px;
-
-  /* reusable glows */
-  --glow-violet: 0 0 24px rgba(176, 38, 255, 0.55), 0 0 60px rgba(176, 38, 255, 0.28);
-  --glow-pink:   0 0 24px rgba(255, 43, 214, 0.55), 0 0 60px rgba(255, 43, 214, 0.28);
-  --glow-blue:   0 0 22px rgba(77, 208, 255, 0.55), 0 0 55px rgba(77, 208, 255, 0.28);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -61,21 +35,20 @@ body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  /*
-    A single soft violet radial up top plus the near-black ground. No
-    scanlines, no full-page grid — the ambient color does the work.
-  */
   background-image:
     radial-gradient(900px 500px at 50% -5%, rgba(176, 38, 255, 0.14), transparent 65%),
     linear-gradient(180deg, #0a0611 0%, #06040b 100%);
   overflow-x: hidden;
 }
 
-h1, h2, h3 { font-family: var(--font-title); font-weight: 600; letter-spacing: -0.01em; }
+h1, h2, h3 {
+  font-family: var(--font-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
 
 a { color: inherit; text-decoration: none; }
 
-/* Page fades/rises in once the Loader hands off. */
 .page { opacity: 0; transform: translateY(14px); }
 .page--in {
   opacity: 1;
@@ -83,7 +56,6 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 0.9s ease, transform 0.9s ease;
 }
 
-/* Reusable helpers -------------------------------------------------- */
 .container {
   width: 100%;
   max-width: var(--maxw);
@@ -93,39 +65,17 @@ a { color: inherit; text-decoration: none; }
   z-index: 1;
 }
 
-/* "System label" above section titles — timecode + label with a neon bar */
 .eyebrow {
+  display: block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--blue-soft);
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  text-shadow: 0 0 12px rgba(77, 208, 255, 0.55);
-}
-.eyebrow::before {
-  content: '';
-  width: 28px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--violet), var(--pink));
-  box-shadow: 0 0 10px rgba(255, 43, 214, 0.7);
+  margin-bottom: 28px;
+  text-shadow: 0 0 10px rgba(77, 208, 255, 0.35);
 }
 
-/* Chrome-filled text (holographic gradient clipped to glyphs). */
-.chrome-text {
-  background: var(--chrome);
-  background-size: 100% 300%;
-  background-position: 0 30%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 20px rgba(176, 38, 255, 0.45));
-}
-
-/* Reduce motion for users who ask for it. */
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
   html { scroll-behavior: auto; }

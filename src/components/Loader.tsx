@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react'
 import './Loader.css'
 
-/*
-  Loader — a single spinning vinyl disc. Holds for a short beat so the
-  spin actually reads, then fades and calls onDone().
-*/
 export default function Loader({ onDone }: { onDone: () => void }) {
   const [leaving, setLeaving] = useState(false)
 
   useEffect(() => {
     const start = setTimeout(() => setLeaving(true), 1200)
-    const done  = setTimeout(onDone, 1200 + 600)
+    const done = setTimeout(onDone, 1800)
     return () => {
       clearTimeout(start)
       clearTimeout(done)

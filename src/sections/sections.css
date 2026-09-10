@@ -1,25 +1,8 @@
-/*
-  SECTIONS — restrained music-neon layout
-  ---------------------------------------
-  The disc supplies the visual focus on the hero. Typography is small
-  and quiet; neon accents are used sparingly (eyebrows, hover states,
-  the disc label, a single hairline). Nothing is oversized.
-*/
-
-/* -------------------------------- shared section shell ----------------- */
 .section {
   padding: 110px 0 100px;
   position: relative;
 }
 
-/* Reusable body copy */
-.body-p {
-  color: var(--text-dim);
-  font-size: 1rem;
-  max-width: 60ch;
-}
-
-/* ============================================================== HERO ==== */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -35,9 +18,7 @@
   gap: 40px;
   width: 100%;
 }
-
 .hero__left { position: relative; z-index: 2; }
-
 .hero__name {
   font-family: var(--font-display);
   font-weight: 500;
@@ -47,24 +28,27 @@
   margin-bottom: 26px;
 }
 .hero__line { display: block; }
-.hero__line--2 {
-  color: var(--text);
-}
-
+.hero__line--2 { color: var(--text); }
 .hero__tag {
   color: var(--text-dim);
   font-size: 1.03rem;
   line-height: 1.55;
   margin-bottom: 34px;
 }
+.hero__right {
+  position: relative;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+}
 
 .hero__staff {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -150px;      /* sit near the very bottom of the hero */
+  bottom: -150px;
   width: 100%;
-  height: auto;       /* keep viewBox aspect so notes aren't squished */
+  height: auto;
   pointer-events: none;
   z-index: 0;
   overflow: visible;
@@ -73,71 +57,23 @@
 }
 @keyframes staff-reveal {
   from { clip-path: inset(0 100% 0 0); }
-  to   { clip-path: inset(0 0     0 0); }
+  to   { clip-path: inset(0 0 0 0); }
 }
-
 .hero__staff path {
   animation: staff-flow 7s ease-in-out infinite;
   transform-origin: center;
   will-change: transform;
 }
-.hero__staff path:nth-child(1) { animation-duration: 6.4s; animation-delay: 0s;    }
+.hero__staff path:nth-child(1) { animation-duration: 6.4s; animation-delay: 0s; }
 .hero__staff path:nth-child(2) { animation-duration: 7.2s; animation-delay: -0.9s; }
 .hero__staff path:nth-child(3) { animation-duration: 6.8s; animation-delay: -1.8s; }
 .hero__staff path:nth-child(4) { animation-duration: 7.5s; animation-delay: -2.7s; }
 .hero__staff path:nth-child(5) { animation-duration: 6.6s; animation-delay: -3.6s; }
-
 @keyframes staff-flow {
   0%, 100% { transform: translateY(-7px); }
-  50%      { transform: translateY( 7px); }
+  50%      { transform: translateY(7px); }
 }
 
-/* Lift the staff 20px on mobile so it doesn't crowd the disc/text. */
-@media (max-width: 700px) {
-  .hero__staff { bottom: -110px; }
-}
-
-.hero__cta { display: flex; gap: 12px; flex-wrap: wrap; }
-
-/* Small quiet buttons */
-.btn {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.9rem;
-  padding: 10px 18px;
-  border-radius: 6px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  border: 1px solid rgba(176, 38, 255, 0.35);
-  color: var(--text);
-  background: rgba(176, 38, 255, 0.08);
-}
-.btn:hover {
-  border-color: var(--violet);
-  background: rgba(176, 38, 255, 0.16);
-}
-.btn--ghost {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.10);
-  color: var(--text-dim);
-}
-.btn--ghost:hover {
-  border-color: rgba(255, 255, 255, 0.28);
-  color: var(--text);
-  background: transparent;
-}
-
-/* Hero — right column: the disc */
-.hero__right {
-  position: relative;
-  display: grid;
-  place-items: center;
-  z-index: 1;
-}
-
-/* ============================================================== DISC ==== */
 .disc {
   position: relative;
   display: grid;
@@ -154,7 +90,6 @@
   filter: blur(24px);
   z-index: -1;
 }
-
 .disc__platter {
   position: relative;
   width: 100%;
@@ -168,58 +103,47 @@
     0 0 60px rgba(176, 38, 255, 0.30),
     0 0 120px rgba(255, 43, 214, 0.18);
   overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
 }
-
-/* Concentric grooves */
+.disc__platter.is-scrubbing { cursor: grabbing; }
 .disc__grooves {
   position: absolute;
   inset: 0;
   border-radius: 50%;
   background:
-    repeating-radial-gradient(
-      circle at 50% 50%,
-      rgba(176, 38, 255, 0.05) 0px,
-      rgba(176, 38, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 5px
-    ),
-    repeating-radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 255, 255, 0.03) 0px,
-      rgba(255, 255, 255, 0.03) 1px,
-      transparent 1px,
-      transparent 3px
-    );
+    repeating-radial-gradient(circle at 50% 50%,
+      rgba(176, 38, 255, 0.05) 0px, rgba(176, 38, 255, 0.05) 1px,
+      transparent 1px, transparent 5px),
+    repeating-radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px, transparent 3px);
   mask-image: radial-gradient(circle at 50% 50%, transparent 22%, #000 24%, #000 96%, transparent 100%);
 }
-
-/* Rotating specular highlight — the "shine" that sweeps across the disc */
 .disc__shine {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background:
-    conic-gradient(from 220deg,
-      transparent 0deg,
-      rgba(255, 43, 214, 0.10) 30deg,
-      rgba(176, 38, 255, 0.18) 60deg,
-      rgba(77, 208, 255, 0.10) 90deg,
-      transparent 130deg,
-      transparent 360deg);
+  background: conic-gradient(from 220deg,
+    transparent 0deg,
+    rgba(255, 43, 214, 0.10) 30deg,
+    rgba(176, 38, 255, 0.18) 60deg,
+    rgba(77, 208, 255, 0.10) 90deg,
+    transparent 130deg,
+    transparent 360deg);
   mix-blend-mode: screen;
   pointer-events: none;
 }
-
-/* Center label */
 .disc__label {
   position: absolute;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 38%;
   height: 38%;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 40%, #ff8ee9 0%, #b026ff 45%, #4dd0ff 100%);
+  background: radial-gradient(circle at 50% 40%, #ff8ee9 0%, #b026ff 45%, #4dd0ff 100%);
   display: grid;
   place-items: center;
   box-shadow:
@@ -234,41 +158,6 @@
   border: 1px dashed rgba(255, 255, 255, 0.45);
 }
 .disc__label-text {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.6rem;
-  color: #0b0714;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
-  z-index: 1;
-}
-.disc__label-sub {
-  position: absolute;
-  bottom: 14%;
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  letter-spacing: 0.32em;
-  color: rgba(11, 7, 20, 0.75);
-}
-.disc__spindle {
-  position: absolute;
-  width: 9%;
-  height: 9%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #f4ecff, #6d5f8a 60%, #241645);
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.4), inset 0 0 4px rgba(0,0,0,0.6);
-  top: 50%; left: 50%; transform: translate(-50%, -50%);
-  z-index: 2;
-}
-
-.disc__platter {
-  cursor: grab;
-  touch-action: none;   /* stop the browser from panning while dragging on touch */
-  user-select: none;
-}
-.disc__platter.is-scrubbing { cursor: grabbing; }
-
-.disc__label-text {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -277,13 +166,20 @@
   font-family: var(--font-mono);
   font-size: 8.5px;
   letter-spacing: 3px;
-  fill: rgba(11, 7, 20, 0.85);
   font-weight: 700;
+  fill: rgba(11, 7, 20, 0.85);
 }
-.disc__label-word--bot {
-  font-size: 6px;
-  letter-spacing: 3px;
-  fill: rgba(11, 7, 20, 0.65);
+.disc__spindle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 9%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #f4ecff, #6d5f8a 60%, #241645);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.4), inset 0 0 4px rgba(0,0,0,0.6);
+  z-index: 2;
 }
 
 .staff-note text {
@@ -294,25 +190,6 @@
     drop-shadow(0 0 14px rgba(176, 38, 255, 0.55));
 }
 
-/* ============================================================= EYEBROW == */
-/* Section eyebrow tweak — a single softer neon-cyan label */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--blue-soft);
-  display: block;
-  margin-bottom: 28px;
-  text-shadow: 0 0 10px rgba(77, 208, 255, 0.35);
-}
-.eyebrow::before { display: none; }   /* remove the neon bar from index.css */
-
-/* ============================================================= ABOUT ==== */
-/*
-  Card sits on a soft violet gradient so the about copy reads as its
-  own panel, and gives the bobbing note group a home on the right.
-*/
 .about__card {
   position: relative;
   border-radius: 20px;
@@ -331,7 +208,6 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }
-/* soft neon glow blooming out of the bottom edge of the card */
 .about__card::after {
   content: '';
   position: absolute;
@@ -343,7 +219,6 @@
   pointer-events: none;
   filter: blur(6px);
 }
-/* eyebrow inside the card, spans full width, sits above the copy */
 .about__eyebrow {
   grid-column: 1 / -1;
   margin-bottom: 0;
@@ -356,11 +231,6 @@
 }
 .about__lead .about__p:first-child { margin-top: 0; }
 
-/*
-  Bobbing note group — three beamed-note SVGs stacked to the right,
-  each drifting up and down on its own schedule so the cluster looks
-  alive without marching in lockstep.
-*/
 .about__notes {
   position: relative;
   display: grid;
@@ -372,10 +242,7 @@
     drop-shadow(0 0 6px rgba(255, 43, 214, 0.5))
     drop-shadow(0 0 18px rgba(176, 38, 255, 0.35));
 }
-.about__notes svg {
-  width: 100%;
-  height: 100%;
-}
+.about__notes svg { width: 100%; height: 100%; }
 .about__notes-a,
 .about__notes-b,
 .about__notes-c {
@@ -383,51 +250,14 @@
   animation: about-notes-bob 6.4s ease-in-out infinite;
   will-change: transform;
 }
-.about__notes-a { animation-duration: 6.4s; animation-delay: 0s;    }
+.about__notes-a { animation-duration: 6.4s; animation-delay: 0s; }
 .about__notes-b { animation-duration: 7.2s; animation-delay: -1.1s; }
 .about__notes-c { animation-duration: 6.8s; animation-delay: -2.4s; }
-
 @keyframes about-notes-bob {
   0%, 100% { transform: translateY(-8px); }
-  50%      { transform: translateY( 8px); }
+  50%      { transform: translateY(8px); }
 }
 
-@media (max-width: 780px) {
-  .about__card {
-    grid-template-columns: 1fr;
-    padding: 30px 26px;
-  }
-  .about__notes { height: 120px; }
-}
-
-/* Small keyed side list */
-.spec {
-  border-top: 1px solid var(--hairline);
-  padding-top: 6px;
-}
-.spec__rows { display: grid; }
-.spec__row {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(176, 38, 255, 0.08);
-  align-items: baseline;
-}
-.spec__row:last-child { border-bottom: none; }
-.spec__row dt {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  color: var(--text-faint);
-  text-transform: uppercase;
-}
-.spec__row dd {
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-}
-
-/* ============================================================== WORK ==== */
 .edu {
   display: flex;
   justify-content: space-between;
@@ -440,25 +270,28 @@
   flex-wrap: wrap;
 }
 .edu__school {
-  font-size: 1.05rem;
-  color: var(--text);
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.edu__logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px;
+  box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.18);
 }
 .edu__deg { color: var(--text-dim); margin-top: 4px; font-size: 0.9rem; }
 .edu__meta { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
-.edu__yr {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-dim);
-}
-.edu__loc {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-faint);
-}
+.edu__yr { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); }
+.edu__loc { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-faint); }
 
-/* Tracklist — clean rows, no play button, no track # column */
 .tracklist {
   list-style: none;
   border-top: 1px solid var(--hairline);
@@ -483,33 +316,18 @@
   color: var(--text);
 }
 .track__org {
-  color: var(--text-dim);
-  font-weight: 400;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  color: var(--text-dim);
+  font-weight: 400;
 }
 .track__logo {
   width: 50px;
   height: 50px;
   border-radius: 6px;
   object-fit: contain;
-  background: rgba(255,255,255,0.03);
-  padding: 3px;
-  box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.18);
-  vertical-align: middle;
-}
-.edu__school {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.edu__logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: contain;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.03);
   padding: 3px;
   box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.18);
 }
@@ -526,7 +344,6 @@
   text-align: right;
 }
 
-/* =========================================================== SELECTED === */
 .releases {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -545,9 +362,6 @@
   background: rgba(176, 38, 255, 0.06);
   transform: translateY(-3px);
 }
-
-/* Preview band — either shows a project image (per-card background-image
-   set inline) or falls back to a neon gradient for cards without one. */
 .release__preview {
   height: 220px;
   background-color: #170b2c;
@@ -560,17 +374,13 @@
   background-position: center;
   background-repeat: no-repeat;
   border-bottom: 1px solid var(--hairline);
-  position: relative;
 }
-
-.release__body {
-  padding: 22px 26px 26px;
-}
+.release__body { padding: 22px 26px 26px; }
 .release__title {
   font-family: var(--font-title);
   font-size: 1.35rem;
-  color: var(--text);
   font-weight: 600;
+  color: var(--text);
   margin-bottom: 10px;
 }
 .release__desc {
@@ -579,8 +389,6 @@
   line-height: 1.5;
   margin-bottom: 18px;
 }
-
-/* Tech-stack pill row */
 .release__stack {
   list-style: none;
   display: flex;
@@ -598,7 +406,6 @@
   border-radius: 999px;
   background: rgba(176, 38, 255, 0.05);
 }
-
 .release__cta {
   display: inline-block;
   font-family: var(--font-mono);
@@ -607,12 +414,11 @@
   text-shadow: 0 0 8px rgba(255, 43, 214, 0.35);
 }
 
-/* ============================================================= FOOTER === */
 .footer {
   border-top: 1px solid var(--hairline);
   padding: 26px 0;
   margin-top: 60px;
-  scroll-margin-top: 84px;   /* nav offset when "Contact" anchor jumps here */
+  scroll-margin-top: 84px;
 }
 .footer__inner {
   display: flex;
@@ -652,7 +458,6 @@
   transform: translateY(-1px);
 }
 
-/* ============================================================ RESPONSIVE = */
 @media (max-width: 860px) {
   .hero__inner {
     grid-template-columns: 1fr;
@@ -661,17 +466,21 @@
   }
   .hero__right { order: -1; }
   .hero__disc { width: 240px !important; height: 240px !important; }
-
-  .about__body { grid-template-columns: 1fr; gap: 30px; }
   .releases { grid-template-columns: 1fr; }
-
   .track { grid-template-columns: 1fr; }
   .track__yr { text-align: left; margin-top: 4px; }
+}
 
-  .channels__link {
-    grid-template-columns: 90px 1fr 20px;
-    gap: 16px;
+@media (max-width: 780px) {
+  .about__card {
+    grid-template-columns: 1fr;
+    padding: 30px 26px;
   }
+  .about__notes { height: 120px; }
+}
+
+@media (max-width: 700px) {
+  .hero__staff { bottom: -110px; }
 }
 
 @media (max-width: 520px) {

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import './Nav.css'
 
 const LINKS = [
-  { id: 'about',    label: 'About' },
-  { id: 'work',     label: 'Work' },
+  { id: 'about', label: 'About' },
+  { id: 'work', label: 'Work' },
   { id: 'projects', label: 'Projects' },
-  { id: 'contact',  label: 'Contact' },
+  { id: 'contact', label: 'Contact' },
 ]
 
 export default function Nav() {
@@ -48,7 +48,6 @@ export default function Nav() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  // Body scroll-lock while the mobile panel is open.
   useEffect(() => {
     if (menuOpen) {
       const prev = document.body.style.overflow
@@ -76,10 +75,6 @@ export default function Nav() {
           ))}
         </nav>
 
-        {/*
-          Hamburger — only rendered visually below the mobile breakpoint
-          (see .nav__toggle in Nav.css). Toggles the .nav--open state.
-        */}
         <button
           type="button"
           className="nav__toggle"
@@ -91,7 +86,6 @@ export default function Nav() {
         </button>
       </div>
 
-      {/* Slide-down mobile panel with the same links. */}
       <div className="nav__panel" role="dialog" aria-hidden={!menuOpen}>
         {LINKS.map((l) => (
           <a

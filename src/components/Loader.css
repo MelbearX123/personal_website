@@ -1,29 +1,24 @@
-/*
-  Loader — dark overlay centred on a spinning vinyl disc (no bar).
-*/
 .loader {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background:
-    radial-gradient(600px 400px at 50% 40%, rgba(176, 38, 255, 0.14), transparent 65%),
-    #06040b;
   display: grid;
   place-items: center;
   opacity: 1;
+  background:
+    radial-gradient(600px 400px at 50% 40%, rgba(176, 38, 255, 0.14), transparent 65%),
+    #06040b;
   transition: opacity 0.5s ease;
 }
 .loader--leaving { opacity: 0; }
 
 .loader__disc {
+  position: relative;
   width: 96px;
   height: 96px;
   border-radius: 50%;
-  /*
-    Base dark platter + a rotating conic-gradient highlight and a
-    couple of groove rings. Without an asymmetric mark the rotation
-    is invisible, so this gives the eye something to track.
-  */
+  display: grid;
+  place-items: center;
   background:
     conic-gradient(from 0deg,
       transparent 0deg,
@@ -31,32 +26,24 @@
       rgba(176, 38, 255, 0.75) 40deg,
       transparent 90deg,
       transparent 360deg),
-    repeating-radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 255, 255, 0.05) 0px,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 5px
-    ),
+    repeating-radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px, transparent 5px),
     radial-gradient(circle at 50% 50%, #14091f 0%, #06040b 100%);
   box-shadow:
     inset 0 0 0 1px rgba(176, 38, 255, 0.28),
     0 0 40px rgba(176, 38, 255, 0.35),
     0 0 90px rgba(255, 43, 214, 0.20);
-  position: relative;
-  display: grid;
-  place-items: center;
   animation: loader-spin 1.6s linear infinite;
 }
 .loader__label {
+  position: relative;
   width: 32%;
   height: 32%;
   border-radius: 50%;
   background: radial-gradient(circle at 50% 40%, #ff8ee9, #b026ff);
   box-shadow: 0 0 14px rgba(176, 38, 255, 0.7);
-  position: relative;
 }
-/* small off-centre dot on the label so its rotation is visible */
 .loader__label::after {
   content: '';
   position: absolute;
@@ -68,4 +55,5 @@
   border-radius: 50%;
   background: #0b0714;
 }
+
 @keyframes loader-spin { to { transform: rotate(360deg); } }
