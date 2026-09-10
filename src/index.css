@@ -1,125 +1,86 @@
 /*
-  GLOBAL STYLES + THEME  —  "Y2K / PS2 cover-art" system
-  ------------------------------------------------------
-  Imported once in main.tsx, so these apply everywhere.
-
-  The look: cold steel-blues and periwinkle over icy near-whites and deep
-  navy, with chrome/silver gradients, faint scanlines and a pixel-dither
-  texture. Think an early-2000s LCD advert or a PS2 game case: glossy,
-  technical, a little melancholy.
+  --------------------------------------------------------
+  Dark, near-black ground with neon purple / blue / pink glows used where
+  the eye needs to land: hero disc, hover states, dividers, headings.
+  The rest of the surface is deliberately quiet so the neon reads.
 */
 :root {
   /* --- core palette ------------------------------------------------ */
-  --ice:        #eef4fb;   /* near-white, faint blue */
-  --steel-050:  #dbe6f4;
-  --steel-100:  #c2d2e8;
-  --steel-200:  #a7bcda;
-  --steel-300:  #8aa2c6;   /* periwinkle mid */
-  --steel-400:  #6d86af;
-  --steel-500:  #556b95;   /* the signature steel blue */
-  --steel-600:  #3f5178;
-  --steel-700:  #2b3a5c;
-  --navy-800:   #1a2540;
-  --navy-900:   #101827;   /* deep panel */
-  --ink:        #0a0f1a;   /* near-black background */
+  --ink-000:    #06040b;   /* deep near-black ground */
+  --ink-050:    #0b0714;   /* body base */
+  --ink-100:    #110a1f;   /* panel */
+  --ink-200:    #1a1030;   /* panel raised */
+  --ink-300:    #241645;
+  --ink-400:    #2f1c5c;
 
-  --cyan:       #86e3ff;   /* electric accent glow */
-  --cyan-dim:   #5bb8dd;
+  --violet:     #b026ff;   /* neon purple — primary accent */
+  --violet-soft:#8a4bff;
+  --pink:       #ff2bd6;   /* neon pink — highlight */
+  --pink-soft:  #ff6be4;
+  --blue:       #4dd0ff;   /* neon cyan-blue — cool accent */
+  --blue-soft:  #7ce0ff;
 
   /* --- semantic tokens -------------------------------------------- */
-  --bg:         var(--ink);
-  --text:       var(--ice);
-  --text-dim:   #9fb0cb;
-  --text-faint: #6a7c9a;
-  --hairline:   rgba(138, 162, 198, 0.20);
-  --hairline-strong: rgba(174, 196, 228, 0.45);
+  --bg:         var(--ink-050);
+  --text:       #f4ecff;
+  --text-dim:   #b5a6d6;
+  --text-faint: #6d5f8a;
+  --hairline:   rgba(176, 38, 255, 0.18);
+  --hairline-strong: rgba(255, 43, 214, 0.42);
 
-  /* Chrome / silver gradient used on bars and text (for dark backgrounds) */
-  --chrome: linear-gradient(180deg, #f4f8ff 0%, #c3d3e8 42%, #8298bb 52%, #b9cbe4 62%, #eaf2fc 100%);
-  /* Dark metallic steel gradient — the same idea inverted, for LIGHT
-     backgrounds (the pale landing). Reads like brushed navy chrome. */
-  --chrome-dark: linear-gradient(180deg, #52678c 0%, #263654 44%, #4a5c80 54%, #1c2740 100%);
-  --steel-panel: linear-gradient(180deg, #26334f 0%, #18223a 100%);
+  /* Chrome / holographic gradient for text and bars */
+  --chrome:      linear-gradient(180deg, #f4ecff 0%, #ff8ee9 30%, #b026ff 55%, #4dd0ff 80%, #f4ecff 100%);
+  --neon-line:   linear-gradient(90deg, transparent, var(--violet) 20%, var(--pink) 50%, var(--blue) 80%, transparent);
+  --panel:       linear-gradient(180deg, rgba(26,16,48,0.75) 0%, rgba(11,7,20,0.85) 100%);
 
-  /* Pale landing surface (the bright reference-cover blue-white) */
-  --pale-top: #eaf1fa;
-  --pale-mid: #d3e0ef;
-  --pale-bot: #bccfe2;
-
-  --font-display: 'Chakra Petch', sans-serif;
-  --font-title:   'Space Grotesk', sans-serif;
+  --font-display: 'Unbounded', 'Chakra Petch', sans-serif;
+  --font-title:   'Chakra Petch', sans-serif;
   --font-mono:    'Space Mono', monospace;
   --font-body:    'Inter', sans-serif;
 
-  --radius: 14px;
+  --radius: 16px;
   --maxw: 1180px;
+
+  /* reusable glows */
+  --glow-violet: 0 0 24px rgba(176, 38, 255, 0.55), 0 0 60px rgba(176, 38, 255, 0.28);
+  --glow-pink:   0 0 24px rgba(255, 43, 214, 0.55), 0 0 60px rgba(255, 43, 214, 0.28);
+  --glow-blue:   0 0 22px rgba(77, 208, 255, 0.55), 0 0 55px rgba(77, 208, 255, 0.28);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
-  scroll-behavior: smooth;         /* glide when the nav jumps between sections */
-  scroll-padding-top: 84px;        /* keep sections clear of the fixed header */
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
 }
 
 body {
-  background-color: var(--ink);
+  background-color: var(--ink-000);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.65;
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   /*
-    Layered background: a cool radial glow up top, a steel-blue wash, and a
-    faint pixel-grid dither so flat areas never look dead.
+    A single soft violet radial up top plus the near-black ground. No
+    scanlines, no full-page grid — the ambient color does the work.
   */
   background-image:
-    radial-gradient(1100px 620px at 50% -8%, rgba(134, 227, 255, 0.10), transparent 60%),
-    radial-gradient(900px 700px at 85% 20%, rgba(85, 107, 149, 0.16), transparent 60%),
-    linear-gradient(180deg, #0e1626 0%, #0a0f1a 55%, #080c15 100%);
-  background-attachment: scroll;
+    radial-gradient(900px 500px at 50% -5%, rgba(176, 38, 255, 0.14), transparent 65%),
+    linear-gradient(180deg, #0a0611 0%, #06040b 100%);
+  overflow-x: hidden;
 }
 
-/* A faint tech grid painted over the whole page via a fixed pseudo-layer. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    linear-gradient(rgba(138, 162, 198, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(138, 162, 198, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  mask-image: radial-gradient(1200px 900px at 50% 0%, #000 40%, transparent 90%);
-}
-
-/* Very subtle CRT scanlines over everything. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0) 0px,
-    rgba(0, 0, 0, 0) 2px,
-    rgba(6, 10, 18, 0.10) 3px
-  );
-  opacity: 0.6;
-}
-
-h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
+h1, h2, h3 { font-family: var(--font-title); font-weight: 600; letter-spacing: -0.01em; }
 
 a { color: inherit; text-decoration: none; }
 
-/* The page fades/rises in once the boot Loader hands off. */
+/* Page fades/rises in once the Loader hands off. */
 .page { opacity: 0; transform: translateY(14px); }
 .page--in {
   opacity: 1;
   transform: none;
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.9s ease, transform 0.9s ease;
 }
 
 /* Reusable helpers -------------------------------------------------- */
@@ -128,34 +89,40 @@ a { color: inherit; text-decoration: none; }
   max-width: var(--maxw);
   margin: 0 auto;
   padding: 0 28px;
+  position: relative;
+  z-index: 1;
 }
 
-/* Monospace "system label" used above section titles, e.g. `// 01 — ABOUT` */
+/* "System label" above section titles — timecode + label with a neon bar */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--cyan-dim);
+  color: var(--blue-soft);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  text-shadow: 0 0 12px rgba(77, 208, 255, 0.55);
 }
 .eyebrow::before {
   content: '';
-  width: 26px;
+  width: 28px;
   height: 1px;
-  background: var(--cyan-dim);
-  opacity: 0.7;
+  background: linear-gradient(90deg, var(--violet), var(--pink));
+  box-shadow: 0 0 10px rgba(255, 43, 214, 0.7);
 }
 
-/* Chrome-filled text (silver gradient clipped to glyphs). */
+/* Chrome-filled text (holographic gradient clipped to glyphs). */
 .chrome-text {
   background: var(--chrome);
+  background-size: 100% 300%;
+  background-position: 0 30%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(176, 38, 255, 0.45));
 }
 
 /* Reduce motion for users who ask for it. */

@@ -1,19 +1,34 @@
 import './sections.css'
 
 /*
-  All page sections live here so the single-page layout is easy to scan.
-  Each section has an id that matches a nav anchor (#about, #work, #projects,
-  #resume-ish "contact"). Content is placeholder-plausible for now — the
-  focus is the visual system; real copy comes later.
+  All page sections for the music-themed rebuild — restrained version.
+  Section ids match nav anchors (#about, #work, #projects, #contact).
 */
 
-/* A little decorative cluster of pixel squares (the PS2-cover motif). */
-function PixelCluster({ className = '' }: { className?: string }) {
+/* -------------------------------------------------------- SPINNING DISC */
+/* A vinyl record: grooved dark platter with a neon-lit label at center.
+   Used on the hero (large) — no ornamental extras. */
+function VinylDisc({
+  size = 340,
+  className = '',
+  spinning = true,
+}: {
+  size?: number
+  className?: string
+  spinning?: boolean
+}) {
   return (
-    <div className={`pixels ${className}`} aria-hidden="true">
-      {[...'110101110100101011'].map((v, i) => (
-        <span key={i} className={v === '1' ? 'on' : ''} />
-      ))}
+    <div
+      className={`disc ${spinning ? 'disc--spin' : ''} ${className}`}
+      style={{ width: size, height: size }}
+      aria-hidden="true"
+    >
+      <div className="disc__glow" />
+      <div className="disc__platter">
+        <div className="disc__grooves" />
+        <div className="disc__label" />
+        <div className="disc__spindle" />
+      </div>
     </div>
   )
 }
@@ -22,35 +37,29 @@ function PixelCluster({ className = '' }: { className?: string }) {
 export function Hero() {
   return (
     <section id="top" className="hero">
-      <div className="hero__grid" aria-hidden="true" />
       <div className="container hero__inner">
-        <div className="hero__meta">
-          <span className="eyebrow">PORTFOLIO · MMXXVI</span>
+        <div className="hero__left">
+          <p className="hero__eyebrow">Melodie Xiong · Portfolio ’26</p>
+
+          <h1 className="hero__name">
+            Designer &amp; developer building tactile,
+            systems-minded interfaces.
+          </h1>
+
+          <p className="hero__tag">
+            Somewhere between a mixing desk and a dream.
+          </p>
+
+          <div className="hero__cta">
+            <a href="#projects" className="btn">View work →</a>
+            <a href="#contact" className="btn btn--ghost">Get in touch</a>
+          </div>
         </div>
 
-        <h1 className="hero__name">
-          <span className="hero__line chrome-text">MELODIE</span>
-          <span className="hero__line hero__line--2">
-            XIONG
-            <PixelCluster className="hero__pixels" />
-          </span>
-        </h1>
-
-        <p className="hero__tag">
-          Designer &amp; developer building tactile, systems-minded interfaces —
-          somewhere between a control panel and a dream.
-        </p>
-
-        <div className="hero__cta">
-          <a href="#projects" className="btn btn--primary">VIEW WORK</a>
-          <a href="#contact" className="btn btn--ghost">GET IN TOUCH</a>
+        <div className="hero__right">
+          <VinylDisc size={360} className="hero__disc" />
         </div>
       </div>
-
-      <a href="#about" className="hero__scroll" aria-label="Scroll to about">
-        <span className="hero__scrolltxt">SCROLL</span>
-        <span className="hero__scrollline" />
-      </a>
     </section>
   )
 }
@@ -58,38 +67,30 @@ export function Hero() {
 /* ----------------------------------------------------------------- ABOUT */
 export function About() {
   const specs = [
-    ['ROLE', 'Product / UX Engineer'],
-    ['BASED', 'Toronto, CA'],
-    ['FOCUS', 'Design systems · Front-end'],
-    ['STATUS', 'Open to work'],
+    ['Role',   'Product / UX Engineer'],
+    ['Based',  'Toronto, CA'],
+    ['Focus',  'Design systems · Front-end'],
+    ['Status', 'Open to work'],
   ]
   return (
     <section id="about" className="section about">
       <div className="container">
-        <span className="eyebrow">// 01 — ABOUT</span>
+        <span className="eyebrow">01 — About</span>
         <div className="about__body">
           <div className="about__lead">
-            <h2 className="section__title">
-              I design and build interfaces that feel like <em>hardware</em>.
-            </h2>
             <p className="about__p">
               I&apos;m Melodie — I work across the seam where design meets
-              engineering. I like interfaces with weight and logic: readable
-              hierarchies, honest states, motion that means something. My work
-              draws on early-2000s tech aesthetics — glossy, technical, a little
-              nostalgic — grounded in modern accessibility and performance.
+              engineering. I like interfaces with weight and logic:
+              readable hierarchies, honest states, motion that means
+              something.
             </p>
             <p className="about__p">
-              Previously I&apos;ve shipped design systems, marketing sites and
-              internal tooling for teams that care about craft.
+              Previously I&apos;ve shipped design systems, marketing sites
+              and internal tooling for teams that care about craft.
             </p>
           </div>
 
           <aside className="spec">
-            <div className="spec__head">
-              <span>SPEC SHEET</span>
-              <span className="spec__id">MX—001</span>
-            </div>
             <dl className="spec__rows">
               {specs.map(([k, v]) => (
                 <div className="spec__row" key={k}>
@@ -98,7 +99,6 @@ export function About() {
                 </div>
               ))}
             </dl>
-            <PixelCluster className="spec__pixels" />
           </aside>
         </div>
       </div>
@@ -108,59 +108,53 @@ export function About() {
 
 /* ------------------------------------------------------- WORK EXPERIENCE */
 export function Work() {
-  const roles = [
+  const tracks = [
     {
-      yr: 'May 2026 — Present',
       role: 'Autonomy Developer',
       org: 'Waterloo Aerial Robotics Group',
+      yr: 'May 2026 — Present',
       desc: 'Building the real-time computer-vision and messaging systems that feed an autonomous drone’s onboard localization.',
     },
     {
-      yr: 'May 2026 — Aug 2026',
       role: 'Software Developer Intern',
       org: 'Miovision',
+      yr: 'May 2026 — Aug 2026',
       desc: 'Modernized the frontend and optimized production data flows for a traffic-intelligence platform serving 17,000+ cities.',
     },
     {
-      yr: 'Sep 2025 — Dec 2025',
       role: 'Software Developer Intern',
       org: 'Port 443 Inc.',
+      yr: 'Sep 2025 — Dec 2025',
       desc: 'Refactored 20+ Angular/TypeScript components and engineered PATCH handling for 60+ .NET objects across three production brands serving 15,000+ users.',
     },
   ]
   return (
     <section id="work" className="section work">
       <div className="container">
-        <span className="eyebrow">// 02 — WORK EXPERIENCE</span>
-        <h2 className="section__title work__title">Where I&apos;ve been</h2>
+        <span className="eyebrow">02 — Work</span>
 
-        {/* Education sits slightly apart, above the work timeline. */}
         <div className="edu">
-          <span className="edu__label">EDUCATION</span>
-          <div className="edu__row">
-            <div className="edu__main">
-              <h3 className="edu__school">University of Waterloo</h3>
-              <p className="edu__deg">BASc, Computer Engineering — Honours</p>
-            </div>
-            <div className="edu__meta">
-              <span className="edu__yr">Sept 2024 — May 2029</span>
-              <span className="edu__loc">Waterloo, ON</span>
-            </div>
+          <div className="edu__main">
+            <h3 className="edu__school">University of Waterloo</h3>
+            <p className="edu__deg">BASc, Computer Engineering — Honours</p>
+          </div>
+          <div className="edu__meta">
+            <span className="edu__yr">Sept 2024 — May 2029</span>
+            <span className="edu__loc">Waterloo, ON</span>
           </div>
         </div>
 
-        <span className="work__sublabel">EXPERIENCE</span>
-        <ol className="timeline">
-          {roles.map((r) => (
-            <li className="timeline__item" key={r.org}>
-              <div className="timeline__yr">{r.yr}</div>
-              <div className="timeline__main">
-                <h3 className="timeline__role">
-                  {r.role} <span className="timeline__org">— {r.org}</span>
+        <ol className="tracklist">
+          {tracks.map((t) => (
+            <li className="track" key={t.org}>
+              <div className="track__main">
+                <h3 className="track__title">
+                  {t.role}{' '}
+                  <span className="track__org">— {t.org}</span>
                 </h3>
-                <p className="timeline__desc">{r.desc}</p>
+                <p className="track__desc">{t.desc}</p>
               </div>
-              <span className="timeline__node" aria-hidden="true" />
+              <span className="track__yr">{t.yr}</span>
             </li>
           ))}
         </ol>
@@ -173,14 +167,12 @@ export function Work() {
 export function SelectedWork() {
   const projects = [
     {
-      n: '01',
       title: 'ChromaForge',
       tag: 'Computer Vision · Python',
       desc: 'A PyTorch/CUDA tool that isolates and separates the colour layers of an image to generate custom background assets for games.',
       href: 'https://github.com/MelbearX123/cv_monorepo/tree/main/projects/chromaforge',
     },
     {
-      n: '02',
       title: 'handcursorx',
       tag: 'Computer Vision · Python',
       desc: 'Hands-free cursor control from a webcam — MediaPipe hand tracking maps fingertip motion and pinch gestures to mouse movement, clicks and scrolling.',
@@ -190,22 +182,16 @@ export function SelectedWork() {
   return (
     <section id="projects" className="section selected">
       <div className="container">
-        <span className="eyebrow">// 03 — SELECTED WORK</span>
-        <h2 className="section__title">Selected work</h2>
-        <div className="cards">
+        <span className="eyebrow">03 — Selected work</span>
+        <div className="releases">
           {projects.map((p) => (
-            <a className="card" key={p.n} href={p.href} target="_blank" rel="noreferrer">
-              <div className="card__thumb" aria-hidden="true">
-                <span className="card__scan" />
-                <PixelCluster className="card__pixels" />
+            <a className="release" key={p.title} href={p.href} target="_blank" rel="noreferrer">
+              <div className="release__head">
+                <h3 className="release__title">{p.title}</h3>
+                <span className="release__tag">{p.tag}</span>
               </div>
-              <div className="card__meta">
-                <span className="card__n">{p.n}</span>
-                <span className="card__tag">{p.tag}</span>
-              </div>
-              <h3 className="card__title">{p.title}</h3>
-              <p className="card__desc">{p.desc}</p>
-              <span className="card__cta">VIEW ON GITHUB →</span>
+              <p className="release__desc">{p.desc}</p>
+              <span className="release__cta">View on GitHub →</span>
             </a>
           ))}
         </div>
@@ -216,44 +202,42 @@ export function SelectedWork() {
 
 /* --------------------------------------------------------------- CONTACT */
 export function Contact() {
-  const links = [
-    ['EMAIL', 'mxiong@uwaterloo.ca', 'mailto:mxiong@uwaterloo.ca'],
-    ['GITHUB', '@MelbearX123', 'https://github.com/MelbearX123'],
-    ['LINKEDIN', 'in/melodie-xiong', 'https://www.linkedin.com/in/melodie-xiong'],
+  const channels = [
+    ['Email',    'mxiong@uwaterloo.ca',  'mailto:mxiong@uwaterloo.ca'],
+    ['GitHub',   '@MelbearX123',          'https://github.com/MelbearX123'],
+    ['LinkedIn', 'in/melodie-xiong',      'https://www.linkedin.com/in/melodie-xiong'],
   ]
   return (
     <section id="contact" className="section contact">
       <div className="container">
-        <span className="eyebrow">// 04 — CONTACTS</span>
-        <div className="contact__body">
-          <h2 className="contact__title chrome-text">LET&apos;S BUILD SOMETHING</h2>
-          <p className="contact__p">
-            Have a project, a role, or just want to trade references? The channel
-            is open.
-          </p>
-          <ul className="contact__links">
-            {links.map(([k, v, href]) => {
-              const external = href.startsWith('http')
-              return (
-                <li key={k}>
-                  <a
-                    href={href}
-                    className="contact__link"
-                    {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                  >
-                    <span className="contact__k">{k}</span>
-                    <span className="contact__v">{v}</span>
-                    <span className="contact__arrow">→</span>
-                  </a>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
+        <span className="eyebrow">04 — Contact</span>
+        <h2 className="contact__title">Let&apos;s build something.</h2>
+        <p className="contact__p">
+          Have a project, a role, or just want to trade references?
+          The line is open.
+        </p>
+
+        <ul className="channels">
+          {channels.map(([k, v, href]) => {
+            const external = href.startsWith('http')
+            return (
+              <li key={k}>
+                <a
+                  href={href}
+                  className="channels__link"
+                  {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                >
+                  <span className="channels__k">{k}</span>
+                  <span className="channels__v">{v}</span>
+                  <span className="channels__arrow">→</span>
+                </a>
+              </li>
+            )
+          })}
+        </ul>
 
         <footer className="footer">
-          <span>© MMXXVI · MELODIE XIONG</span>
-          <span className="footer__sys">MX_OS v2.0 — ALL SYSTEMS NOMINAL</span>
+          <span>© 2026 · Melodie Xiong</span>
         </footer>
       </div>
     </section>
