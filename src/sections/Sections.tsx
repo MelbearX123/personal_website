@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import './sections.css'
 import miovisionLogo from '../assets/miovisonlogo.png'
 import port443Logo from '../assets/port443logo.png'
@@ -14,8 +15,7 @@ import modbotPreview from '../assets/modbot.png'
 */
 
 /* -------------------------------------------------------- SPINNING DISC */
-/* A vinyl record: grooved dark platter with a neon-lit label at center.
-   Used on the hero (large) — no ornamental extras. */
+
 function VinylDisc({
   size = 340,
   className = '',
@@ -25,21 +25,173 @@ function VinylDisc({
   className?: string
   spinning?: boolean
 }) {
+  const platterRef = useRef<HTMLDivElement>(null)
+
+  const angleRef = useRef(0)
+  const draggingRef = useRef(false)
+  const centreRef = useRef({ x: 0, y: 0 })
+  const lastPointerAngleRef = useRef(0)
+  const lastNoteAtRef = useRef(0)
+
+  /*
+    Emit a music-note glyph that rides one of the five wavy staff
+    lines on the landing page. Uses SVG <animateMotion> pointing at
+    the picked path (staff-line-1..5), so the note follows the exact
+    curve. The note removes itself when the motion animation ends.
+  */
+  const spawnNote = () => {
+    const staff = document.querySelector('.hero__staff') as SVGSVGElement | null
+    if (!staff) return
+    const ns = 'http://www.w3.org/2000/svg'
+    const glyphs = ['♪', '♫', '♩', '♬']
+    const lineIndex = 1 + Math.floor(Math.random() * 5)
+
+    const g = document.createElementNS(ns, 'g')
+    g.setAttribute('class', 'staff-note')
+
+    const text = document.createElementNS(ns, 'text')
+    text.textContent = glyphs[Math.floor(Math.random() * glyphs.length)]
+    text.setAttribute('font-size', String(24 + Math.random() * 10))
+    text.setAttribute('text-anchor', 'middle')
+    text.setAttribute('dominant-baseline', 'middle')
+    g.appendChild(text)
+
+    // Slide the note along the chosen staff line.
+    const motion = document.createElementNS(ns, 'animateMotion')
+    motion.setAttribute('dur', `${2.2 + Math.random() * 1.2}s`)
+    motion.setAttribute('fill', 'freeze')
+    motion.setAttribute('rotate', 'auto')
+    motion.setAttribute('calcMode', 'spline')
+    motion.setAttribute('keyTimes', '0;1')
+    motion.setAttribute('keySplines', '0.22 0.61 0.36 1')
+    const mpath = document.createElementNS(ns, 'mpath')
+    mpath.setAttribute('href', `#staff-line-${lineIndex}`)
+    motion.appendChild(mpath)
+    g.appendChild(motion)
+
+    // Fade in and out over the same window so it doesn't just pop away.
+    const fade = document.createElementNS(ns, 'animate')
+    fade.setAttribute('attributeName', 'opacity')
+    fade.setAttribute('values', '0;1;1;0')
+    fade.setAttribute('keyTimes', '0;0.15;0.75;1')
+    fade.setAttribute('dur', motion.getAttribute('dur') as string)
+    fade.setAttribute('fill', 'freeze')
+    g.appendChild(fade)
+
+    staff.appendChild(g)
+    // Some browsers won't auto-start SMIL added dynamically; nudge it.
+    ;(motion as unknown as { beginElement?: () => void }).beginElement?.()
+    ;(fade as unknown as { beginElement?: () => void }).beginElement?.()
+
+    const durMs = parseFloat(motion.getAttribute('dur') as string) * 1000
+    setTimeout(() => g.remove(), durMs + 200)
+  }
+
+  useEffect(() => {
+    if (!spinning) return
+    let raf = 0
+    let prev = performance.now()
+    const degPerSec = 360 / 10   // one revolution every ~10 seconds
+
+    const tick = (now: number) => {
+      const dt = (now - prev) / 1000
+      prev = now
+      if (!draggingRef.current) {
+        angleRef.current += degPerSec * dt
+      }
+      const el = platterRef.current
+      if (el) el.style.transform = `rotate(${angleRef.current}deg)`
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [spinning])
+
+  // Angle (in degrees) from the platter's centre to the pointer.
+  const pointerAngle = (clientX: number, clientY: number) => {
+    const c = centreRef.current
+    return (Math.atan2(clientY - c.y, clientX - c.x) * 180) / Math.PI
+  }
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = platterRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    centreRef.current = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    }
+    lastPointerAngleRef.current = pointerAngle(e.clientX, e.clientY)
+    draggingRef.current = true
+    el.setPointerCapture(e.pointerId)
+    el.classList.add('is-scrubbing')
+  }
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!draggingRef.current) return
+    const a = pointerAngle(e.clientX, e.clientY)
+    let delta = a - lastPointerAngleRef.current
+    // Wrap the delta into (-180, 180] so a jump across the −180/180
+    // boundary doesn't fling the disc a full turn.
+    if (delta > 180) delta -= 360
+    if (delta < -180) delta += 360
+    angleRef.current += delta
+    lastPointerAngleRef.current = a
+    const el = platterRef.current
+    if (el) el.style.transform = `rotate(${angleRef.current}deg)`
+
+    // Emit a note whenever the disc actually moved, throttled so we
+    // don't spam the DOM. Each note rides one of the staff lines.
+    const now = performance.now()
+    if (Math.abs(delta) > 0.5 && now - lastNoteAtRef.current > 130) {
+      lastNoteAtRef.current = now
+      spawnNote()
+    }
+  }
+
+  const endScrub = (e: React.PointerEvent<HTMLDivElement>) => {
+    draggingRef.current = false
+    const el = platterRef.current
+    if (!el) return
+    try { el.releasePointerCapture(e.pointerId) } catch {/* ignore */}
+    el.classList.remove('is-scrubbing')
+  }
+
   return (
     <div
-      className={`disc ${spinning ? 'disc--spin' : ''} ${className}`}
+      className={`disc ${className}`}
       style={{ width: size, height: size }}
-      aria-hidden="true"
     >
       <div className="disc__glow" />
-      <div className="disc__platter">
+      <div
+        className="disc__platter"
+        ref={platterRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endScrub}
+        onPointerCancel={endScrub}
+      >
         <div className="disc__grooves" />
         <div className="disc__shine" />
         <div className="disc__label">
           <span className="disc__label-ring" />
+
+          <svg className="disc__label-text" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              {/* upper half of a circle; textPath rides its top arc */}
+              <path id="disc-arc-top" d="M 12 50 A 38 38 0 0 1 88 50" fill="none"/>
+            </defs>
+            <text className="disc__label-word">
+              <textPath href="#disc-arc-top" startOffset="50%" textAnchor="middle">
+                SPIN&nbsp;·&nbsp;ME
+              </textPath>
+            </text>
+          </svg>
+
           <span className="disc__spindle" />
         </div>
       </div>
+
     </div>
   )
 }
@@ -58,6 +210,42 @@ export function Hero() {
             <em>I'm a frontend-focused fullstack dev, interested in computer vision</em>
           </p>
         </div>
+
+        <svg
+          className="hero__staff"
+          viewBox="0 0 1200 260"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <g
+            fill="none"
+            stroke="rgba(244, 236, 255, 0.9)"
+            strokeWidth="2.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path id="staff-line-1" d="M 20 90
+                     C 180 -20, 340 210, 500 130
+                     S 820 -10,  980 110
+                     S 1180 140, 1180 150"/>
+            <path id="staff-line-2" d="M 20 120
+                     C 180  20, 360 210, 520 150
+                     S 820  30, 1000 130
+                     S 1180 170, 1180 175"/>
+            <path id="staff-line-3" d="M 20 155
+                     C 200  70, 380 220, 540 170
+                     S 840  90, 1020 160
+                     S 1180 195, 1180 200"/>
+            <path id="staff-line-4" d="M 20 185
+                     C 220 120, 400 230, 560 195
+                     S 860 130, 1040 190
+                     S 1180 218, 1180 220"/>
+            <path id="staff-line-5" d="M 20 215
+                     C 240 170, 420 245, 580 220
+                     S 880 175, 1060 215
+                     S 1180 235, 1180 238"/>
+          </g>
+        </svg>
 
         <div className="hero__right">
           <VinylDisc size={360} className="hero__disc" />
@@ -221,10 +409,6 @@ export function SelectedWork() {
 }
 
 /* --------------------------------------------------------------- FOOTER */
-/*
-  The "Contact" nav item scrolls here. We show a compact footer strip
-  with three icon links (mail / GitHub / LinkedIn) and a copyright.
-*/
 export function Contact() {
   return (
     <footer id="contact" className="footer">
