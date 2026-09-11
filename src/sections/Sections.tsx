@@ -275,6 +275,7 @@ export function Work() {
       role: 'Software Developer Intern',
       org: 'Miovision',
       logo: miovisionLogo,
+      url: 'https://miovision.com/',
       yr: 'May 2026 — Aug 2026',
       desc: 'Modernized frontend and optimized production data flows for a traffic-intelligence platform serving 17,000+ cities',
     },
@@ -282,6 +283,7 @@ export function Work() {
       role: 'Software Developer Intern',
       org: 'Port 443 Inc.',
       logo: port443Logo,
+      url: 'https://www.port443.io/',
       yr: 'Sep 2025 — Dec 2025',
       desc: 'Refactored frontend and backend API handling across three production brands serving 15,000+ users',
     },
@@ -289,6 +291,7 @@ export function Work() {
       role: 'Autonomy Developer',
       org: 'Waterloo Aerial Robotics Group',
       logo: wargLogo,
+      url: 'https://www.uwarg.com/',
       yr: 'May 2026 — Present',
       desc: 'Building the real-time computer-vision and messaging systems that feed an autonomous drone’s onboard localization',
     },
@@ -300,28 +303,26 @@ export function Work() {
 
         <ol className="tracklist">
           {tracks.map((t) => (
-            <li className="track" key={t.org}>
-              <div className="track__main">
-                <h3 className="track__title">
-                  {t.role}{' '}
-                  <span className="track__org">
-                    — {t.org}
-                    <img className="track__logo" src={t.logo} alt="" aria-hidden="true" />
-                  </span>
-                </h3>
-                <p className="track__desc">{t.desc}</p>
-              </div>
-              <span className="track__yr">{t.yr}</span>
+            <li key={t.org}>
+              <a className="track" href={t.url} target="_blank" rel="noreferrer">
+                <img className="track__logo" src={t.logo} alt="" aria-hidden="true" />
+                <div className="track__main">
+                  <h3 className="track__title">
+                    {t.role}{' '}
+                    <span className="track__org">— {t.org}</span>
+                  </h3>
+                  <p className="track__desc">{t.desc}</p>
+                </div>
+                <span className="track__yr">{t.yr}</span>
+              </a>
             </li>
           ))}
         </ol>
 
         <div className="edu">
+          <img className="edu__logo" src={waterlooLogo} alt="" aria-hidden="true" />
           <div className="edu__main">
-            <h3 className="edu__school">
-              University of Waterloo
-              <img className="edu__logo" src={waterlooLogo} alt="" aria-hidden="true" />
-            </h3>
+            <h3 className="edu__school">University of Waterloo</h3>
             <p className="edu__deg">BASc, Computer Engineering — Honours, 3x Excellent Standing</p>
           </div>
           <div className="edu__meta">

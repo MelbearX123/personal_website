@@ -259,32 +259,28 @@
 }
 
 .edu {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 20px;
   padding: 20px 0;
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
   margin-bottom: 40px;
-  flex-wrap: wrap;
 }
 .edu__school {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
   font-family: var(--font-title);
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--text);
 }
 .edu__logo {
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   object-fit: contain;
   background: rgba(255, 255, 255, 0.04);
-  padding: 3px;
+  padding: 4px;
   box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.18);
 }
 .edu__deg { color: var(--text-dim); margin-top: 4px; font-size: 0.9rem; }
@@ -298,11 +294,12 @@
 }
 .track {
   display: grid;
-  grid-template-columns: 1fr 190px;
-  gap: 24px;
-  align-items: baseline;
+  grid-template-columns: 56px 1fr 190px;
+  gap: 20px;
+  align-items: center;
   padding: 22px 0;
   border-bottom: 1px solid var(--hairline);
+  cursor: pointer;
   transition: background 0.2s ease, padding 0.2s ease;
 }
 .track:hover {
@@ -316,19 +313,17 @@
   color: var(--text);
 }
 .track__org {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   color: var(--text-dim);
   font-weight: 400;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 .track__logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 6px;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
   object-fit: contain;
   background: rgba(255, 255, 255, 0.03);
-  padding: 3px;
+  padding: 4px;
   box-shadow: 0 0 0 1px rgba(176, 38, 255, 0.18);
 }
 .track__desc {
@@ -467,8 +462,9 @@
   .hero__right { order: -1; }
   .hero__disc { width: 240px !important; height: 240px !important; }
   .releases { grid-template-columns: 1fr; }
-  .track { grid-template-columns: 1fr; }
-  .track__yr { text-align: left; margin-top: 4px; }
+  .track { grid-template-columns: 48px 1fr; }
+  .track__logo { width: 48px; height: 48px; }
+  .track__yr { grid-column: 2; text-align: left; margin-top: 4px; }
 }
 
 @media (max-width: 780px) {
@@ -485,6 +481,7 @@
 
 @media (max-width: 520px) {
   .section { padding: 80px 0 70px; }
-  .edu { flex-direction: column; align-items: flex-start; }
-  .edu__meta { align-items: flex-start; text-align: left; }
+  .edu { grid-template-columns: 48px 1fr; }
+  .edu__logo { width: 48px; height: 48px; }
+  .edu__meta { grid-column: 2; align-items: flex-start; text-align: left; margin-top: 4px; }
 }
