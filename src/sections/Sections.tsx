@@ -386,7 +386,6 @@ export function SelectedWork() {
                     <li key={s}>{s}</li>
                   ))}
                 </ul>
-                <span className="release__cta">View on GitHub →</span>
               </div>
             </a>
           ))}
