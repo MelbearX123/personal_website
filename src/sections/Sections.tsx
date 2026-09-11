@@ -6,7 +6,7 @@ import wargLogo from '../assets/warglogo.png'
 import waterlooLogo from '../assets/waterloologo.png'
 import lampPreview from '../assets/lamp.png'
 import chromaforgePreview from '../assets/chromaforge.png'
-import handcursorPreview from '../assets/preview-handcursorx.svg'
+import handcursorPreview from '../assets/handcursorx.png'
 import modbotPreview from '../assets/modbot.png'
 
 function VinylDisc({
