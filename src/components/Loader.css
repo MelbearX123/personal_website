@@ -44,16 +44,4 @@
   background: radial-gradient(circle at 50% 40%, #ff8ee9, #b026ff);
   box-shadow: 0 0 14px rgba(176, 38, 255, 0.7);
 }
-.loader__label::after {
-  content: '';
-  position: absolute;
-  top: 22%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #0b0714;
-}
-
 @keyframes loader-spin { to { transform: rotate(360deg); } }
