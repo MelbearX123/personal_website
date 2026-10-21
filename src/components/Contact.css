@@ -43,7 +43,7 @@
   gap: 14px;
 }
 
-.contact .contact__eyebrow { color: var(--on-dark-soft); }
+.contact__eyebrow { color: var(--on-dark-soft); }
 
 .contact__heading {
   font-family: var(--font-display);
@@ -82,7 +82,7 @@
 
 .contact .btn--light:hover { background: #fff; }
 
-.contact .contact__legal {
+.contact__legal {
   position: relative;
   padding-top: 20px;
   border-top: 1px solid rgba(234, 240, 248, 0.15);
