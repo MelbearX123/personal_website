@@ -1,0 +1,147 @@
+/* Design tokens and the few primitives shared across sections. */
+
+:root {
+  --ink: #0B1B36;
+  --ink-soft: #3E5273;
+  --paper: #F4F7FB;
+  --bg: #DDE6F0;
+  --accent: #1F3FD1;
+  --periwinkle: #BFD2FF;
+  --line: #A9BEDC;
+
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-edge: rgba(255, 255, 255, 0.95);
+  --shadow: 0 10px 30px rgba(30, 60, 120, 0.1);
+  --radius: 18px;
+
+  --font-display: 'Michroma', sans-serif;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px; /* keeps anchors clear of the sticky nav */
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(1200px 700px at 85% -10%, #F4F8FD, rgba(244, 248, 253, 0) 60%),
+    radial-gradient(900px 600px at -10% 40%, #C9D7EA, rgba(201, 215, 234, 0) 60%),
+    var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p, ol, ul { margin: 0; }
+
+a { color: var(--accent); }
+a:hover { color: var(--ink); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- layout ---------- */
+
+.section {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-inline: 24px;
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ---------- surfaces ---------- */
+
+.panel {
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--shadow);
+}
+
+/* "Window" title bar along the top of a panel. */
+.panel__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(11, 27, 54, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(232, 239, 248, 0.8));
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+/* Halftone dot texture. */
+.dots {
+  background-image: radial-gradient(var(--ink) 1.1px, transparent 1.3px);
+  background-size: 14px 14px;
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn--accent {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
