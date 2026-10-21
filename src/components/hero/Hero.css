@@ -1,0 +1,180 @@
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 88px 72px;
+}
+
+.hero__halftone {
+  position: absolute;
+  right: 0;
+  top: 24px;
+  width: 62%;
+  height: 520px;
+  opacity: 0.1;
+  mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ---------- intro column ---------- */
+
+.hero__intro {
+  position: relative;
+  flex: 1 1 520px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.hero__tags li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.hero__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(44px, 6.6vw, 96px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.hero__tagline {
+  max-width: 500px;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.waveform {
+  width: 100%;
+  max-width: 520px;
+  height: 64px;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.waveform path { vector-effect: non-scaling-stroke; }
+
+.waveform__echo {
+  stroke: #8FA8D8;
+  stroke-width: 1.2;
+}
+
+.waveform__lead {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- disc ---------- */
+
+.hero__deck {
+  position: relative;
+  flex: 0 1 460px;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.hero__ring {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-edge);
+  box-shadow: 0 30px 70px rgba(30, 60, 120, 0.18), inset 0 0 0 10px rgba(255, 255, 255, 0.35);
+}
+
+.hero__notes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.note {
+  position: absolute;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.disc {
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  background:
+    radial-gradient(circle, transparent 0 15%, rgba(255, 255, 255, 0.85) 15.5% 17%, transparent 17.5%),
+    conic-gradient(from 20deg, #EAF2FF, #BFD2FF, #F3E8FF, #C9F1FF, #FFFFFF, #D3DFFF, #E9DDFF, #CFF6FF, #EAF2FF);
+  box-shadow: inset 0 0 0 1px rgba(11, 27, 54, 0.12), 0 10px 30px rgba(31, 63, 209, 0.18);
+}
+
+.disc:active { cursor: grabbing; }
+
+/* Grooves and the sheen that sweeps round with the disc. */
+.disc::before,
+.disc::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.disc::before {
+  background: repeating-radial-gradient(circle, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 4px);
+}
+
+.disc::after {
+  background: linear-gradient(120deg, transparent 35%, rgba(255, 255, 255, 0.75) 48%, transparent 60%);
+}
+
+.disc__label {
+  position: absolute;
+  inset: 33%;
+  z-index: 1;
+  border-radius: 50%;
+  background: rgba(238, 244, 252, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(11, 27, 54, 0.14);
+}
+
+/* Spindle hole. */
+.disc__label::after {
+  content: '';
+  position: absolute;
+  inset: 35.3%; /* 10% of the disc's width, expressed inside the 34%-wide label */
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: inset 0 1px 3px rgba(11, 27, 54, 0.35);
+}
+
+.hero__hint { font-size: 12px; }
