@@ -109,9 +109,17 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(10px);
   border: 1px solid var(--glass-edge);
   box-shadow: 0 30px 70px rgba(30, 60, 120, 0.18), inset 0 0 0 10px rgba(255, 255, 255, 0.35);
+}
+
+/* The disc's drop shadow lives here so it stays put instead of orbiting as the disc turns. */
+.hero__ring::before {
+  content: '';
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(31, 63, 209, 0.18);
 }
 
 .hero__notes {
@@ -136,7 +144,9 @@
   background:
     radial-gradient(circle, transparent 0 15%, rgba(255, 255, 255, 0.85) 15.5% 17%, transparent 17.5%),
     conic-gradient(from 20deg, #EAF2FF, #BFD2FF, #F3E8FF, #C9F1FF, #FFFFFF, #D3DFFF, #E9DDFF, #CFF6FF, #EAF2FF);
-  box-shadow: inset 0 0 0 1px rgba(11, 27, 54, 0.12), 0 10px 30px rgba(31, 63, 209, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(11, 27, 54, 0.12);
+  /* Rotated every frame: keep it on its own compositor layer so it's painted once, not per frame. */
+  will-change: transform;
 }
 
 .disc:active { cursor: grabbing; }
