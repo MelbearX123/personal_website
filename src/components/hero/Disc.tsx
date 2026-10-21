@@ -27,14 +27,14 @@ export default function Disc({ turntable, onScratch }: DiscProps) {
     platter.current!.style.transform = `rotate(${turntable.rotation}deg)`
   })
 
-  const angleTo = (e: PointerEvent, { centerX, centerY }: Grip) =>
+  const angleAround = (e: PointerEvent, centerX: number, centerY: number) =>
     (Math.atan2(e.clientY - centerY, e.clientX - centerX) * 180) / Math.PI
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
-    const g = { centerX: rect.left + rect.width / 2, centerY: rect.top + rect.height / 2, angle: 0, travel: 0 }
-    g.angle = angleTo(e, g)
-    grip.current = g
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    grip.current = { centerX, centerY, angle: angleAround(e, centerX, centerY), travel: 0 }
     e.currentTarget.setPointerCapture(e.pointerId)
     turntable.grab(e.timeStamp)
   }
@@ -42,7 +42,7 @@ export default function Disc({ turntable, onScratch }: DiscProps) {
   const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
     const g = grip.current
     if (!g) return
-    const angle = angleTo(e, g)
+    const angle = angleAround(e, g.centerX, g.centerY)
     const delta = angleDelta(g.angle, angle)
     g.angle = angle
     turntable.drag(delta, e.timeStamp)

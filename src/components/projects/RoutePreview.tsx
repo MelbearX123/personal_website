@@ -59,7 +59,12 @@ export default function RoutePreview() {
   })
 
   return (
-    <div className="preview preview--route" onPointerEnter={(e) => (startedAt.current = e.timeStamp)}>
+    <div
+      className="preview preview--route"
+      onPointerEnter={(e) => {
+        startedAt.current = e.timeStamp
+      }}
+    >
       <svg ref={svg} viewBox="0 0 320 180" fill="none">
         <g stroke="var(--ink)" strokeWidth="1.4" strokeDasharray="1 1" opacity="0.55">
           <path ref={trunk} d="M44 90 H150" pathLength={1} strokeDashoffset="1" />

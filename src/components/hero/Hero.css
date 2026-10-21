@@ -21,7 +21,7 @@
 /* ---------- intro column ---------- */
 
 .hero__intro {
-  position: relative;
+  position: relative; /* above the halftone */
   flex: 1 1 520px;
   min-width: 0;
   display: flex;
@@ -93,7 +93,7 @@
 /* ---------- disc ---------- */
 
 .hero__deck {
-  position: relative;
+  position: relative; /* above the halftone */
   flex: 0 1 460px;
   min-width: 260px;
   display: flex;

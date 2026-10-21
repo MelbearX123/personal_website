@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useRef } from 'react'
+import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react'
 
 export type FrameCallback = (dt: number, now: number) => void
 
@@ -11,7 +11,9 @@ export type FrameCallback = (dt: number, now: number) => void
  */
 export function useAnimationFrame(target: RefObject<Element>, onFrame: FrameCallback) {
   const callback = useRef(onFrame)
-  callback.current = onFrame
+  useLayoutEffect(() => {
+    callback.current = onFrame
+  })
 
   useEffect(() => {
     const element = target.current

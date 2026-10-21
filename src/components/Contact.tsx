@@ -5,6 +5,7 @@ import { idleSeconds } from '../lib/motion'
 import './Contact.css'
 
 const MERIDIANS = 12
+const START_LONGITUDE = 0.3 // rad; also the resting pose under reduced motion
 const SPIN_RATE = 0.2 // rad/s
 const LATITUDES = [
   { cy: 100, rx: 90, ry: 14 },
@@ -23,7 +24,8 @@ function meridian(longitude: number) {
   }
 }
 
-const longitudeOf = (index: number, seconds: number) => (index * Math.PI) / (MERIDIANS / 2) + 0.3 + seconds * SPIN_RATE
+const longitudeOf = (index: number, seconds: number) =>
+  (index / MERIDIANS) * 2 * Math.PI + START_LONGITUDE + seconds * SPIN_RATE
 
 /** Slowly rotating wireframe globe. */
 function Globe() {
@@ -44,7 +46,10 @@ function Globe() {
       <circle cx="100" cy="100" r="90" />
       {Array.from({ length: MERIDIANS }, (_, i) => {
         const { d, opacity } = meridian(longitudeOf(i, 0))
-        return <path key={i} ref={(el) => (meridians.current[i] = el!)} d={d} opacity={opacity} />
+        const register = (path: SVGPathElement | null) => {
+          if (path) meridians.current[i] = path
+        }
+        return <path key={i} ref={register} d={d} opacity={opacity} />
       })}
       {LATITUDES.map(({ cy, rx, ry }) => (
         <ellipse key={cy} cx="100" cy={cy} rx={rx} ry={ry} />
