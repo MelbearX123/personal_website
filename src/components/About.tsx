@@ -18,7 +18,11 @@ export default function About() {
             I'm a computer engineering student at the University of Waterloo. I like building software that makes
             people's lives easier and more fun. Currently interested and dabbling in computer vision.
           </p>
-          <p className="mono">BASc Computer Engineering · Honours · 3× Excellent Standing · Waterloo, ON</p>
+          <p className="mono">
+            BASc Computer Engineering · Honours
+            <br />
+            3× Excellent Standing
+          </p>
         </div>
       </article>
 
