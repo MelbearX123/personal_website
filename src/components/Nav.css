@@ -42,3 +42,83 @@
   font-family: var(--font-mono);
   font-size: 13px;
 }
+
+.nav__toggle { display: none; }
+
+/* ---------- phones: floating menu button + dropdown ---------- */
+
+@media (max-width: 640px) {
+  /* No bar across the top any more, so anchors only need a little breathing room. */
+  html { scroll-padding-top: 24px; }
+
+  .nav {
+    position: fixed;
+    top: 14px;
+    right: 16px;
+    padding: 0;
+  }
+
+  .nav__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 46px;
+    height: 46px;
+    padding: 0 13px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-edge);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 6px 24px rgba(30, 60, 120, 0.12);
+    cursor: pointer;
+  }
+
+  .nav__toggle span {
+    height: 1.5px;
+    border-radius: 1px;
+    background: var(--ink);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  /* The three lines fold into an X while the menu is open. */
+  .nav--open .nav__toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav--open .nav__toggle span:nth-child(2) { opacity: 0; }
+  .nav--open .nav__toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav__bar {
+    position: absolute;
+    top: 56px;
+    right: 0;
+    min-width: 200px;
+    padding: 8px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.85);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  }
+
+  .nav--open .nav__bar {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+  }
+
+  .nav .nav__brand { display: none; }
+
+  .nav__links {
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    font-size: 15px;
+  }
+
+  .nav__links a {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .nav__links a:hover { background: rgba(31, 63, 209, 0.06); }
+}
