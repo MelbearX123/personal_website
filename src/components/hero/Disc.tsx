@@ -1,5 +1,6 @@
 import { type PointerEvent, useRef } from 'react'
 import { useAnimationFrame } from '../../hooks/useAnimationFrame'
+import { angleDelta } from '../../lib/motion'
 import type { Turntable } from './turntable'
 
 const SCRATCH_DEGREES = 18 // drag distance per emitted note
@@ -42,8 +43,7 @@ export default function Disc({ turntable, onScratch }: DiscProps) {
     const g = grip.current
     if (!g) return
     const angle = angleTo(e, g)
-    // Shortest signed difference, so crossing the ±180° seam doesn't jump.
-    const delta = ((angle - g.angle + 540) % 360) - 180
+    const delta = angleDelta(g.angle, angle)
     g.angle = angle
     turntable.drag(delta, e.timeStamp)
 

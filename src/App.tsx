@@ -2,6 +2,7 @@ import About from './components/About'
 import Experience from './components/Experience'
 import Nav from './components/Nav'
 import Hero from './components/hero/Hero'
+import Projects from './components/projects/Projects'
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
         <Hero />
         <About />
         <Experience />
+        <Projects />
       </main>
     </>
   )
