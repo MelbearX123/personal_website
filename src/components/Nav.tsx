@@ -1,102 +1,51 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { NAV_LINKS } from '../content'
 import './Nav.css'
 
-const LINKS = [
-  { id: 'about', label: 'About' },
-  { id: 'work', label: 'Work' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'contact', label: 'Contact' },
-]
-
+/** Pill nav bar on wide screens; on phones, a floating menu button that drops the links down. */
 export default function Nav() {
-  const [active, setActive] = useState('about')
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const header = useRef<HTMLElement>(null)
+  const [open, setOpen] = useState(false)
 
+  // While the menu is open, close it on Escape or a tap anywhere outside it.
   useEffect(() => {
-    const onScroll = () => {
-      const hero = document.getElementById('top')
-      const threshold = (hero ? hero.offsetHeight : window.innerHeight) * 0.72
-      setScrolled(window.scrollY > threshold)
+    if (!open) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
     }
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id)
-        })
-      },
-      { rootMargin: '-45% 0px -50% 0px', threshold: 0 },
-    )
-    LINKS.forEach((l) => {
-      const el = document.getElementById(l.id)
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth > 700) setMenuOpen(false)
+    const onPointerDown = (e: PointerEvent) => {
+      if (!header.current!.contains(e.target as Node)) setOpen(false)
     }
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  }, [])
-
-  useEffect(() => {
-    if (menuOpen) {
-      const prev = document.body.style.overflow
-      document.body.style.overflow = 'hidden'
-      return () => { document.body.style.overflow = prev }
+    document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.removeEventListener('pointerdown', onPointerDown)
     }
-  }, [menuOpen])
+  }, [open])
+
+  const close = () => setOpen(false)
 
   return (
-    <header className={`nav ${scrolled ? 'nav--scrolled' : ''} ${menuOpen ? 'nav--open' : ''}`}>
-      <div className="nav__inner container">
-        <a href="#top" className="nav__brand" onClick={() => setMenuOpen(false)}>
-          <span className="nav__brandtext">MELODIE&nbsp;<span className="nav__brandx">X</span></span>
-        </a>
+    <header ref={header} className={`nav${open ? ' nav--open' : ''}`}>
+      <button
+        type="button"
+        className="nav__toggle"
+        aria-label={open ? 'Close menu' : 'Open menu'}
+        aria-expanded={open}
+        aria-controls="nav-menu"
+        onClick={() => setOpen(!open)}
+      >
+        <span /><span /><span />
+      </button>
 
-        <nav className="nav__links">
-          {LINKS.map((l) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              className={`nav__link ${active === l.id ? 'is-active' : ''}`}
-            >
-              {l.label}
-            </a>
+      <div id="nav-menu" className="nav__bar">
+        <a className="nav__brand" href="#top" onClick={close}>MELODIE·X</a>
+        <nav className="nav__links" aria-label="Sections">
+          {NAV_LINKS.map((link) => (
+            <a key={link.href} href={link.href} onClick={close}>{link.label}</a>
           ))}
         </nav>
-
-        <button
-          type="button"
-          className="nav__toggle"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <span /><span /><span />
-        </button>
-      </div>
-
-      <div className="nav__panel" role="dialog" aria-hidden={!menuOpen}>
-        {LINKS.map((l) => (
-          <a
-            key={l.id}
-            href={`#${l.id}`}
-            className={`nav__panel-link ${active === l.id ? 'is-active' : ''}`}
-            onClick={() => setMenuOpen(false)}
-          >
-            {l.label}
-          </a>
-        ))}
       </div>
     </header>
   )

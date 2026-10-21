@@ -1,0 +1,76 @@
+import { type PointerEvent, useRef } from 'react'
+import { useAnimationFrame } from '../../hooks/useAnimationFrame'
+import { angleDelta } from '../../lib/motion'
+import type { Turntable } from './turntable'
+
+const SCRATCH_DEGREES = 18 // drag distance per emitted note
+
+interface Grip {
+  centerX: number
+  centerY: number
+  angle: number // deg, pointer angle around the center at the last move
+  travel: number // deg dragged since the last scratch
+}
+
+interface DiscProps {
+  turntable: Turntable
+  onScratch: () => void
+}
+
+/** The draggable platter. Rotation comes from the shared turntable; this only renders it and feeds it drags. */
+export default function Disc({ turntable, onScratch }: DiscProps) {
+  const platter = useRef<HTMLDivElement>(null)
+  const grip = useRef<Grip | null>(null)
+
+  useAnimationFrame(platter, (_, now) => {
+    turntable.advance(now)
+    platter.current!.style.transform = `rotate(${turntable.rotation}deg)`
+  })
+
+  const angleAround = (e: PointerEvent, centerX: number, centerY: number) =>
+    (Math.atan2(e.clientY - centerY, e.clientX - centerX) * 180) / Math.PI
+
+  const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    grip.current = { centerX, centerY, angle: angleAround(e, centerX, centerY), travel: 0 }
+    e.currentTarget.setPointerCapture(e.pointerId)
+    turntable.grab(e.timeStamp)
+  }
+
+  const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    const g = grip.current
+    if (!g) return
+    const angle = angleAround(e, g.centerX, g.centerY)
+    const delta = angleDelta(g.angle, angle)
+    g.angle = angle
+    turntable.drag(delta, e.timeStamp)
+
+    g.travel += Math.abs(delta)
+    if (g.travel > SCRATCH_DEGREES) {
+      g.travel = 0
+      onScratch()
+    }
+  }
+
+  const onPointerUp = (e: PointerEvent<HTMLDivElement>) => {
+    if (!grip.current) return
+    grip.current = null
+    turntable.release(e.timeStamp)
+  }
+
+  return (
+    <div
+      ref={platter}
+      className="disc"
+      aria-hidden="true"
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+    >
+      <div className="disc__label" />
+    </div>
+  )
+}

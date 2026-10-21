@@ -1,22 +1,21 @@
-import { useState } from 'react'
-import Loader from './components/Loader'
+import About from './components/About'
+import Contact from './components/Contact'
+import Experience from './components/Experience'
 import Nav from './components/Nav'
-import { Hero, About, Work, SelectedWork, Contact } from './sections/Sections'
+import Hero from './components/hero/Hero'
+import Projects from './components/projects/Projects'
 
 export default function App() {
-  const [booted, setBooted] = useState(false)
-
   return (
     <>
-      {!booted && <Loader onDone={() => setBooted(true)} />}
       <Nav />
-      <main className={`page ${booted ? 'page--in' : ''}`}>
+      <main>
         <Hero />
         <About />
-        <Work />
-        <SelectedWork />
-        <Contact />
+        <Experience />
+        <Projects />
       </main>
+      <Contact />
     </>
   )
 }

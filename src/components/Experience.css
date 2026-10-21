@@ -1,0 +1,45 @@
+.experience { padding-bottom: 112px; }
+
+.tracklist {
+  padding: 8px 28px;
+  list-style: none;
+}
+
+.track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 24px 0;
+}
+
+.track + .track { border-top: 1px solid rgba(11, 27, 54, 0.1); }
+
+.track__number {
+  flex: 0 0 40px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.track__body {
+  flex: 1 1 480px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.track__title {
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.track__title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.track__title a:hover { color: var(--accent); }
+
+.track__summary { color: var(--ink-soft); }

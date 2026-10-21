@@ -1,0 +1,91 @@
+.contact {
+  --on-dark: #EAF0F8;
+  --on-dark-soft: var(--line);
+  padding-bottom: 32px;
+}
+
+.contact__panel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 64px 40px 32px;
+  border-radius: 24px;
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+.globe {
+  position: absolute;
+  right: -70px;
+  top: -80px;
+  width: 420px;
+  height: 420px;
+  opacity: 0.42;
+  stroke: var(--periwinkle);
+  stroke-width: 0.6;
+}
+
+.contact__main {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.contact__intro {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact__eyebrow { color: var(--on-dark-soft); }
+
+.contact__heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1.15;
+}
+
+.contact__email {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--periwinkle);
+  overflow-wrap: anywhere;
+}
+
+.contact__email:hover { color: var(--on-dark); }
+
+.contact__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.contact .btn {
+  border-color: var(--on-dark-soft);
+  color: var(--on-dark);
+}
+
+.contact .btn:hover { background: rgba(234, 240, 248, 0.12); }
+
+.contact .btn--light {
+  border-color: var(--on-dark);
+  background: var(--on-dark);
+  color: var(--ink);
+}
+
+.contact .btn--light:hover { background: #fff; }
+
+.contact__legal {
+  position: relative;
+  padding-top: 20px;
+  border-top: 1px solid rgba(234, 240, 248, 0.15);
+  font-size: 12px;
+  color: var(--on-dark-soft);
+}
