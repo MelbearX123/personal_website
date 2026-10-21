@@ -1,9 +1,10 @@
-import { clamp, prefersReducedMotion } from '../../lib/motion'
+import { clamp, damp, prefersReducedMotion } from '../../lib/motion'
 
 const IDLE_SPIN = 27 // deg/s
 const KICK = 480 // deg/s added by the "spin the disc" button
 const MAX_FLICK = 900 // deg/s, cap on the speed a drag can release with
 const FLICK_WINDOW = 100 // ms; holding still longer than this before letting go releases with no spin
+const FLICK_SMOOTHING = 30 // 1/s; low-pass on drag speed so a single jittery pointer sample can't fling the disc
 const DECAY_PER_SECOND = 0.2 // fraction of velocity and energy left after one second
 const FULL_ENERGY_SPEED = 600 // deg/s at which the waveform is fully excited
 
@@ -46,13 +47,14 @@ export class Turntable {
   grab(at: number) {
     this.held = true
     this.velocity = 0
+    this.flick = 0
     this.lastDragAt = at
   }
 
   /** Turns the held disc by `degrees`. */
   drag(degrees: number, at: number) {
     const elapsed = (at - this.lastDragAt) / 1000
-    this.flick = elapsed > 0 ? degrees / elapsed : 0
+    if (elapsed > 0) this.flick = damp(this.flick, degrees / elapsed, FLICK_SMOOTHING, elapsed)
     this.lastDragAt = at
     this.rotation += degrees
     this.energy = Math.min(1, this.energy + Math.abs(degrees) / 45)
