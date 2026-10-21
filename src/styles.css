@@ -87,7 +87,6 @@ a:hover { color: var(--ink); }
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--glass);
-  backdrop-filter: blur(12px);
   border: 1px solid var(--glass-edge);
   box-shadow: var(--shadow);
 }
