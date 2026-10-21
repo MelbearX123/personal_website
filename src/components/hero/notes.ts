@@ -6,14 +6,19 @@ const LIFETIME = 1700 // ms
 const MAX_NOTES = 30
 
 /**
- * Floats a music glyph outward from a random point on the disc's rim.
- * Fire-and-forget: the browser animates it on the compositor and the
+ * Floats `count` music glyphs outward from random points on the disc's rim.
+ * Fire-and-forget: the browser animates them on the compositor and each
  * element removes itself when done, so React never sees these nodes.
  */
-export function spawnNote(layer: HTMLElement) {
+export function spawnNotes(layer: HTMLElement, count: number) {
+  // Read layout once, before any appends invalidate it.
+  const size = layer.clientWidth
+  for (let i = 0; i < count; i++) spawnNote(layer, size)
+}
+
+function spawnNote(layer: HTMLElement, size: number) {
   if (layer.childElementCount >= MAX_NOTES) layer.firstElementChild?.remove()
 
-  const size = layer.clientWidth
   const angle = Math.random() * 2 * Math.PI
   const cos = Math.cos(angle)
   const sin = Math.sin(angle)

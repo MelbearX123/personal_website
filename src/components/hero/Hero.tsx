@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { FOCUS_AREAS } from '../../content'
 import Disc from './Disc'
 import Waveform from './Waveform'
-import { spawnNote } from './notes'
+import { spawnNotes } from './notes'
 import { Turntable } from './turntable'
 import './Hero.css'
 
@@ -10,13 +10,9 @@ export default function Hero() {
   const [turntable] = useState(() => new Turntable())
   const notes = useRef<HTMLDivElement>(null)
 
-  const scatterNotes = (count: number) => {
-    for (let i = 0; i < count; i++) spawnNote(notes.current!)
-  }
-
   const spin = () => {
     turntable.kick()
-    scatterNotes(8)
+    spawnNotes(notes.current!, 8)
   }
 
   return (
@@ -46,7 +42,7 @@ export default function Hero() {
 
       <div className="hero__deck">
         <div className="hero__ring">
-          <Disc turntable={turntable} onScratch={() => scatterNotes(1)} />
+          <Disc turntable={turntable} onScratch={() => spawnNotes(notes.current!, 1)} />
           <div ref={notes} className="hero__notes" aria-hidden="true" />
         </div>
         <p className="mono hero__hint">drag the disc ↻</p>
