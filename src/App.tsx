@@ -1,4 +1,5 @@
 import About from './components/About'
+import Contact from './components/Contact'
 import Experience from './components/Experience'
 import Nav from './components/Nav'
 import Hero from './components/hero/Hero'
@@ -14,6 +15,7 @@ export default function App() {
         <Experience />
         <Projects />
       </main>
+      <Contact />
     </>
   )
 }
