@@ -68,7 +68,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'handcursorx',
     title: 'handcursorx',
-    summary: 'Webcam-driven hands-free cursor control — pinch to click, move to point, gesture to scroll.',
+    summary: 'Webcam-driven hands-free cursor control. Pinch to click, move to point, gesture to scroll.',
     stack: ['Python', 'MediaPipe', 'OpenCV'],
     href: 'https://github.com/MelbearX123/handcursorx',
   },
