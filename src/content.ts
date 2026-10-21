@@ -53,7 +53,8 @@ export interface Project {
   title: string
   summary: string
   stack: string[]
-  href: string
+  href: string // source code
+  demo?: string // live site, when there is one
 }
 
 export const PROJECTS: Project[] = [
@@ -63,13 +64,6 @@ export const PROJECTS: Project[] = [
     summary: 'A simulated 5-DOF lamp character that reacts to people with vision, speech and motion.',
     stack: ['Python', 'OpenCV', 'MuJoCo'],
     href: 'https://github.com/MelbearX123/cv_monorepo/tree/main/projects/interactive_lamp',
-  },
-  {
-    id: 'chromaforge',
-    title: 'ChromaForge',
-    summary: 'Splits an image into its colour layers to generate custom game background assets.',
-    stack: ['Python', 'NumPy'],
-    href: 'https://github.com/MelbearX123/cv_monorepo/tree/main/projects/chromaforge',
   },
   {
     id: 'handcursorx',
@@ -85,6 +79,14 @@ export const PROJECTS: Project[] = [
       'Finds the fastest digivolution route from one Digimon to another in Digimon Story: Time Stranger.',
     stack: ['React', 'FastAPI', 'TypeScript'],
     href: 'https://github.com/MelbearX123/digivolve-target',
+    demo: 'https://digivolve-target.vercel.app/',
+  },
+  {
+    id: 'chromaforge',
+    title: 'ChromaForge',
+    summary: 'Splits an image into its colour layers to generate custom game background assets.',
+    stack: ['Python', 'NumPy'],
+    href: 'https://github.com/MelbearX123/cv_monorepo/tree/main/projects/chromaforge',
   },
 ]
 
