@@ -20,7 +20,7 @@ export interface Experience {
 
 export const EXPERIENCE: Experience[] = [
   {
-    title: 'Software Developer Intern — Miovision',
+    title: 'Software Developer Intern — Miovision Technologies',
     href: 'https://miovision.com/',
     summary:
       'Modernized frontend and optimized production data flows for a traffic-intelligence platform serving 17,000+ cities.',
@@ -82,7 +82,7 @@ export const PROJECTS: Project[] = [
     id: 'digivolve',
     title: 'Digivolve Target',
     summary:
-      'Finds the fastest digivolution route from one Digimon to another in Digimon Story: Time Stranger, using breadth-first search.',
+      'Finds the fastest digivolution route from one Digimon to another in Digimon Story: Time Stranger.',
     stack: ['React', 'FastAPI', 'TypeScript'],
     href: 'https://github.com/MelbearX123/digivolve-target',
   },
